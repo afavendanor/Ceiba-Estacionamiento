@@ -25,12 +25,18 @@ pipeline {
  		stage('Checkout') {
  			steps{
  				echo "------------>Checkout<------------"
- 				checkout([$class: 'GitSCM', branches: [[name: '*/master']],
- 				doGenerateSubmoduleConfigurations: false, extensions: [], gitTool:
- 				'Git_Centos', submoduleCfg: [], userRemoteConfigs: 
- 				[[credentialsId: 'GitHub_afavendanor', url:'https://github.com/afavendanor/Ceiba-Estacionamiento']]])
+ 				git branch: 'master', 
+				credentialsId: 'GitHub_afavendanor', 
+				url: 'https://github.com/afavendanor/Ceiba-Estacionamiento.git'
+				sh 'gradle clean'
  			}
  		}
+ 		stage('Compile') {
+			steps{
+				echo "------------>Unit Tests<------------"
+				sh 'gradle --b ./build.gradle compileJava'
+			}
+		}
  		stage('Unit Tests') {
  			steps{
  				echo "------------>Unit Tests<------------"
@@ -40,6 +46,7 @@ pipeline {
  		stage('Integration Tests') {
  			steps {
  				echo "------------>Integration Tests<------------"
+ 				
  			}
  		}
  		stage('Static Code Analysis') {
@@ -64,7 +71,7 @@ pipeline {
 	 	}
 	 	success {
 	 		echo 'This will run only if successful'
-	 		//junit '**/build/test-results/test/*.xml'
+	 		junit '**/jacoco/test-results/*.xml'
 	 	}
 	 	failure {
 	 		echo 'This will run only if failed'
