@@ -70,8 +70,10 @@ pipeline {
  			echo 'This will always run'
 	 	}
 	 	success {
-	 		echo 'This will run only if successful'
-	 		junit '**/jacoco/test-results/*.xml'
+			echo 'This will run only if successful'
+			sh 'gradle test'
+			junit '**/jacoco/test-results/*.xml'
+			jacoco classPattern: '**/build/classes/java', execPattern: '**/jacoco/jacocoTest.exec', sourcePattern: '**/src/main/java'
 	 	}
 	 	failure {
 	 		echo 'This will run only if failed'
