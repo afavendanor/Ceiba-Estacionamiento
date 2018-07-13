@@ -19,6 +19,7 @@ pipeline {
  		gradle 'Gradle4.5_Centos' //Preinstalada en la Configuración del Master
  	}
  	
+ 	
  	//Aquí comienzan los “items” del Pipeline
  	stages{
  		stage('Checkout') {
@@ -42,13 +43,13 @@ pipeline {
  			}
  		}
  		stage('Static Code Analysis') {
- 			steps{
- 				echo '------------>Análisis de código estático<------------'
- 				withSonarQubeEnv('Sonar') {
-					sh '${tool name: "SonarScanner" type:"hudson.plugins.sonar.SonarRunnerInstallation"}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"'
- 				}
- 			}
- 		}
+			steps{	
+				echo '------------>Análisis de código estático<------------' 
+				withSonarQubeEnv('Sonar') {
+					sh "${tool name: 'SonarScanner' , type: 'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+				}
+			}
+		}
  		stage('Build') {
  			steps {
  				echo "------------>Build<------------"
