@@ -41,7 +41,7 @@ pipeline {
  			steps{
  				echo "------------>Unit Tests<------------"
  				sh 'gradle --b ./build.gradle test'
- 				sh 'gradle test'
+ 				/*sh 'gradle test'*/
 				junit '**/jacoco/test-results/*.xml'
 				jacoco classPattern: '**/build/classes/java', execPattern: '**/jacoco/jacocoTest.exec', sourcePattern: '**/src/main/java' 				
  			}
