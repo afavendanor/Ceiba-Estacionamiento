@@ -1,7 +1,7 @@
 package co.com.ceiba.ceibaestacionamientoapirest.model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "vehiculos")
@@ -25,15 +23,18 @@ public class Vehiculo implements Serializable {
 	private int cilindraje;
 	private boolean activo;
 
-	@Column(name = "create_at")
-	@Temporal(TemporalType.DATE)
-	private Date fechaIngreso;
+	@Column(name = "fecha_ingreso")	
+	private LocalDateTime fechaIngreso;
 
 	public Vehiculo(String placa, String tipo, int cilindraje) {
-		super();
 		this.placa = placa;
 		this.tipo = tipo;
 		this.cilindraje = cilindraje;
+		this.fechaIngreso =  LocalDateTime.now();
+	}
+
+	public Vehiculo() {
+		super();
 	}
 
 	public Long getId() {
@@ -60,11 +61,11 @@ public class Vehiculo implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public Date getFechaIngreso() {
+	public LocalDateTime getFechaIngreso() {
 		return fechaIngreso;
 	}
 
-	public void setFechaIngreso(Date fechaIngreso) {
+	public void setFechaIngreso(LocalDateTime fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
 
