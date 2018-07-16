@@ -1,5 +1,5 @@
 /*Se insertan valores para vehiculos*/
-INSERT INTO VEHICULOS(placa, tipo, cilindraje, activo, fecha_ingreso) VALUES('NWK23D', 'MOTO', 500, true, now());
+INSERT INTO VEHICULOS(placa, tipo, cilindraje, activo, fecha_ingreso) VALUES('NWK23D', 'MOTO', 500, true, SYSDATE());
 INSERT INTO VEHICULOS(placa, tipo, cilindraje, activo, fecha_ingreso) VALUES('FDF254', 'CARRO', 0, true, now());
 INSERT INTO VEHICULOS(placa, tipo, cilindraje, activo, fecha_ingreso) VALUES('DFT25E', 'MOTO', 650, true, now());
 INSERT INTO VEHICULOS(placa, tipo, cilindraje, activo, fecha_ingreso) VALUES('GTS87A', 'MOTO', 100, true, now());
