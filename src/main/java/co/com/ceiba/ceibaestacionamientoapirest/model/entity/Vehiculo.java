@@ -1,7 +1,8 @@
 package co.com.ceiba.ceibaestacionamientoapirest.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "vehiculos")
@@ -23,14 +28,15 @@ public class Vehiculo implements Serializable {
 	private int cilindraje;
 	private boolean activo;
 
-	@Column(name = "fecha_ingreso")	
-	private LocalDateTime fechaIngreso;
+	@Column(name = "fecha_ingreso")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaIngreso;
 
-	public Vehiculo(String placa, String tipo, int cilindraje) {
+	public Vehiculo(String placa, String tipo, int cilindraje, Date fechaIngreso) {
 		this.placa = placa;
 		this.tipo = tipo;
 		this.cilindraje = cilindraje;
-		this.fechaIngreso =  LocalDateTime.now();
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	public Vehiculo() {
@@ -61,11 +67,11 @@ public class Vehiculo implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public LocalDateTime getFechaIngreso() {
+	public Date getFechaIngreso() {
 		return fechaIngreso;
 	}
 
-	public void setFechaIngreso(LocalDateTime fechaIngreso) {
+	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
 
