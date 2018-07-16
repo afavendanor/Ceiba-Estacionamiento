@@ -30,9 +30,9 @@ public class Vehiculo implements Serializable {
 
 	@Column(name = "fecha_ingreso")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaIngreso;
+	private Calendar fechaIngreso;
 
-	public Vehiculo(String placa, String tipo, int cilindraje, Date fechaIngreso) {
+	public Vehiculo(String placa, String tipo, int cilindraje, Calendar fechaIngreso) {
 		this.placa = placa;
 		this.tipo = tipo;
 		this.cilindraje = cilindraje;
@@ -67,11 +67,11 @@ public class Vehiculo implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public Date getFechaIngreso() {
+	public Calendar getFechaIngreso() {
 		return fechaIngreso;
 	}
 
-	public void setFechaIngreso(Date fechaIngreso) {
+	public void setFechaIngreso(Calendar fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
 
