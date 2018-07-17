@@ -10,16 +10,16 @@ import org.springframework.web.context.request.WebRequest;
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 
 @ControllerAdvice
-public class HandlerException {
+public class HandlerController {
 
 	@ExceptionHandler({ VehiculoNoAutorizadoException.class })
 	public ResponseEntity<Object> handlerVehiculoNoAutorizado(Exception ex, WebRequest request) {
-		return new ResponseEntity<Object>(ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@ExceptionHandler({ Throwable.class })
 	public ResponseEntity<Object> handlerErrorInterno(Exception ex, WebRequest request) {
-		return new ResponseEntity<Object>(ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	

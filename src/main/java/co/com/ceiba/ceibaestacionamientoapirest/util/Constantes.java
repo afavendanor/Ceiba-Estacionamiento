@@ -1,6 +1,6 @@
 package co.com.ceiba.ceibaestacionamientoapirest.util;
 
-public class Constantes {
+public final class Constantes {
 	
 	public static final double VALOR_HORA_CARRO = 1000;
 	public static final double VALOR_HORA_MOTO = 500;

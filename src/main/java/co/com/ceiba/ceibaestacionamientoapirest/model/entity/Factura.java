@@ -12,8 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 @Table(name = "facturas")
 public class Factura implements Serializable {
