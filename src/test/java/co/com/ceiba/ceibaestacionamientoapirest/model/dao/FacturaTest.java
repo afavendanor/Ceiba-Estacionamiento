@@ -16,7 +16,7 @@ public class FacturaTest {
 	private static final double TOTAL_A_PAGAR = 2000;
 
 	@Test
-	public void crearLibroTest() {
+	public void crearFacturaTest() {
 
 		/**
 		 * Arrange

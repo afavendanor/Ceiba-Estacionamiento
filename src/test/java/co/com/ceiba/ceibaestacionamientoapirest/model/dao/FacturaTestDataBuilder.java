@@ -17,10 +17,17 @@ public class FacturaTestDataBuilder {
 	public FacturaTestDataBuilder() {
 		this.placa = PLACA;
 		this.totalAPagar = TOTAL_A_PAGAR;
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR, cal.get(Calendar.HOUR) + 2);
-		this.fechaIngreso = cal.getTime();
-		this.fechaSalida = new Date();
+		Date fechaSolicitud = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaSolicitud);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date fechaSalida = calendar.getTime();
+		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 2);
+		this.fechaIngreso = calendar.getTime();
+		this.fechaSalida = fechaSalida;
 	}
 	
 	public FacturaTestDataBuilder conPlaca(String placa) {
