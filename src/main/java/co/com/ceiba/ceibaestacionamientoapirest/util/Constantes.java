@@ -9,6 +9,7 @@ public final class Constantes {
 	public static final double VALOR_ADICIONAL_CILINDRAJE_MOTO = 2000;
 	public static final double NUMERO_CARROS_PERMITIDOS = 20;
 	public static final double NUMERO_MOTOS_PERMITIDAS = 10;
+	public static final int CILINDRAJE_MOTO_MAXIMO = 500;
 	
 	private Constantes() {
 		

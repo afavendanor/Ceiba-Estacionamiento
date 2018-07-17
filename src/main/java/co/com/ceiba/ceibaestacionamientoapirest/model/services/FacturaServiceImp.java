@@ -10,6 +10,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IFacturaDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
+import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 @Service
 public class FacturaServiceImp implements IFacturaService {
@@ -17,10 +18,7 @@ public class FacturaServiceImp implements IFacturaService {
 	private static final int SEGUNDOS_HORA = 3600;
 	private static final int MAXIMO_HORAS_DIA = 9;
 	private static final int HORAS_DIA = 24;
-	private static final String MOTO = "MOTO";
-	private static final String CARRO = "CARRO";
-	private static final int CILINDRAJE_MOTO_MAXIMO = 500;
-	
+
 	@Autowired
 	private IFacturaDao facturaDao;
 
@@ -40,9 +38,10 @@ public class FacturaServiceImp implements IFacturaService {
 		int horas = diferencia / SEGUNDOS_HORA != 0 ? diferencia / SEGUNDOS_HORA : 1;
 		int dias = horas / HORAS_DIA;
 		int horasresiduo = horas % HORAS_DIA;
-		double valorHora = CARRO.equals(vehiculo.getTipo()) ? Constantes.VALOR_HORA_CARRO
+		double valorHora = TipoVehiculo.MOTO == vehiculo.getTipo() ? Constantes.VALOR_HORA_CARRO
 				: Constantes.VALOR_HORA_MOTO;
-		double valorDia = CARRO.equals(vehiculo.getTipo()) ? Constantes.VALOR_DIA_CARRO : Constantes.VALOR_DIA_MOTO;
+		double valorDia = TipoVehiculo.CARRO == vehiculo.getTipo() ? Constantes.VALOR_DIA_CARRO
+				: Constantes.VALOR_DIA_MOTO;
 
 		if (horasresiduo >= MAXIMO_HORAS_DIA) {
 			dias += 1;
@@ -56,7 +55,7 @@ public class FacturaServiceImp implements IFacturaService {
 			valorTotal += precioDias;
 		}
 
-		if (MOTO.equals(vehiculo.getTipo()) && vehiculo.getCilindraje() > CILINDRAJE_MOTO_MAXIMO) {
+		if (TipoVehiculo.MOTO == vehiculo.getTipo() && vehiculo.getCilindraje() > Constantes.CILINDRAJE_MOTO_MAXIMO) {
 			valorTotal += Constantes.VALOR_ADICIONAL_CILINDRAJE_MOTO;
 		}
 
