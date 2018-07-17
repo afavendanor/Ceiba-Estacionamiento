@@ -12,6 +12,10 @@ public interface IVehiculoService {
 
 	public Vehiculo findById(Long id);
 
-	public void delete(Long id);
+	public void validarDisponibilidad(String tipo);
+
+	public void validarHabilitacion(String placa);
+
+	public void estaRegistrado(String placa);
 
 }

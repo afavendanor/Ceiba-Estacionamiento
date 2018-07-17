@@ -1,13 +1,18 @@
 package co.com.ceiba.ceibaestacionamientoapirest.model.services;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 
 @Service
 public class VehiculoServiceImp implements IVehiculoService {
@@ -34,9 +39,33 @@ public class VehiculoServiceImp implements IVehiculoService {
 	}
 
 	@Override
-	@Transactional
-	public void delete(Long id) {
-		vehiculoDao.deleteById(id);
+	@Transactional(readOnly = true)
+	public void validarDisponibilidad(String tipo) {
+		int vehiculosParqueados = vehiculoDao.vehiculosParqueados(tipo);
+
+		if (!(("MOTO".equals(tipo) && vehiculosParqueados < Constantes.NUMERO_CARROS_PERMITIDOS)
+				|| ("CARRO".equals(tipo) && vehiculosParqueados < Constantes.NUMERO_MOTOS_PERMITIDAS))) {
+			throw new VehiculoNoAutorizadoException("No hay parqueadero disponible para el vehiculo");
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void validarHabilitacion(String placa) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(new Date());
+		if ("A".equalsIgnoreCase(placa.substring(0, 1))
+				&& (cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 2)) {
+			throw new VehiculoNoAutorizadoException("El vehiculo no esta autorizado para ingresar");
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void estaRegistrado(String placa) {
+		if (vehiculoDao.estaRegistrado(placa) == 1) {
+			throw new VehiculoNoAutorizadoException("El vehiculo ya se encuentra registrado en el sistema");
+		}
 	}
 
 }
