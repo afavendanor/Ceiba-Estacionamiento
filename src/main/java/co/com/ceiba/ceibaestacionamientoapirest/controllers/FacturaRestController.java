@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,15 +23,19 @@ public class FacturaRestController {
 	
 	@Autowired
 	private IFacturaService facturaService;
+	
+	@Autowired
+	private IFacturaService vehiculoService;
 
-	@PostMapping("/factura")
+	@PostMapping("/facturar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Factura create(@RequestBody Vehiculo vehiculo) {
+	public Factura create(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
 		Factura factura = new Factura();
 		factura.setFechaIngreso(vehiculo.getFechaIngreso());
 		factura.setPlaca(vehiculo.getPlaca());
 		factura.setFechaSalida(new Date());
-		facturaService.valorAPagar(vehiculo, factura.getFechaSalida());
+		factura.setTotalAPagar(facturaService.valorAPagar(vehiculo, factura.getFechaSalida()));
+		facturaService.cambiarEstadoVehiculo(id);
 		this.facturaService.save(factura);
 		return factura;
 	}

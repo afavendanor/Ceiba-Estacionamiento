@@ -21,6 +21,8 @@ public class Factura implements Serializable {
 	private Long id;
 	
 	private String placa;
+	
+	@Column(name = "total_a_pagar")
 	private double totalAPagar;
 
 	@Column(name = "fecha_ingreso")

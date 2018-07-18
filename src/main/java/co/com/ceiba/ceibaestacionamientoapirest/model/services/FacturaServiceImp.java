@@ -38,8 +38,8 @@ public class FacturaServiceImp implements IFacturaService {
 		int horas = diferencia / SEGUNDOS_HORA != 0 ? diferencia / SEGUNDOS_HORA : 1;
 		int dias = horas / HORAS_DIA;
 		int horasresiduo = horas % HORAS_DIA;
-		double valorHora = TipoVehiculo.MOTO == vehiculo.getTipo() ? Constantes.VALOR_HORA_CARRO
-				: Constantes.VALOR_HORA_MOTO;
+		double valorHora = TipoVehiculo.MOTO == vehiculo.getTipo() ? Constantes.VALOR_HORA_MOTO
+				: Constantes.VALOR_HORA_CARRO;
 		double valorDia = TipoVehiculo.CARRO == vehiculo.getTipo() ? Constantes.VALOR_DIA_CARRO
 				: Constantes.VALOR_DIA_MOTO;
 
@@ -61,6 +61,12 @@ public class FacturaServiceImp implements IFacturaService {
 
 		return valorTotal;
 
+	}
+
+	@Override
+	@Transactional
+	public void cambiarEstadoVehiculo(Long id) {
+		facturaDao.cambiarEstadoVehiculo(id);		
 	}
 
 }

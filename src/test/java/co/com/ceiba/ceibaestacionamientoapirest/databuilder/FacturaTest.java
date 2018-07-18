@@ -1,4 +1,4 @@
-package co.com.ceiba.ceibaestacionamientoapirest.model.dao;
+package co.com.ceiba.ceibaestacionamientoapirest.databuilder;
 
 import static org.junit.Assert.assertEquals;
 

@@ -10,5 +10,7 @@ public interface IFacturaService {
 	public Factura save(Factura factura);
 	
 	public double valorAPagar(Vehiculo vehiculo, Date fechaSalida);
+	
+	public void cambiarEstadoVehiculo(Long id);
 
 }

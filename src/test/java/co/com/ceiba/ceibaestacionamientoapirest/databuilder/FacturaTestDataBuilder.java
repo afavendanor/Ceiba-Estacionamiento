@@ -1,4 +1,4 @@
-package co.com.ceiba.ceibaestacionamientoapirest.model.dao;
+package co.com.ceiba.ceibaestacionamientoapirest.databuilder;
 
 import java.util.Calendar;
 import java.util.Date;
