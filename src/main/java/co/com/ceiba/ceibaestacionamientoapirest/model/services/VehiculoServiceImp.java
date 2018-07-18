@@ -13,12 +13,17 @@ import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoEx
 import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
+import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 @Service
 public class VehiculoServiceImp implements IVehiculoService {
 
-	@Autowired
 	private IVehiculoDao vehiculoDao;
+
+	@Autowired
+	public VehiculoServiceImp(IVehiculoDao vehiculoDao) {
+		this.vehiculoDao = vehiculoDao;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -40,32 +45,34 @@ public class VehiculoServiceImp implements IVehiculoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public void validarDisponibilidad(String tipo) {
+	public boolean validarDisponibilidad(String tipo) {
 		int vehiculosParqueados = vehiculoDao.vehiculosParqueados(tipo);
-
-		if (!(("MOTO".equals(tipo) && vehiculosParqueados < Constantes.NUMERO_CARROS_PERMITIDOS)
-				|| ("CARRO".equals(tipo) && vehiculosParqueados < Constantes.NUMERO_MOTOS_PERMITIDAS))) {
+		if (!((TipoVehiculo.CARRO.toString().equals(tipo) && vehiculosParqueados < Constantes.NUMERO_CARROS_PERMITIDOS)
+				|| (TipoVehiculo.MOTO.toString().equals(tipo) && vehiculosParqueados < Constantes.NUMERO_MOTOS_PERMITIDAS))) {
 			throw new VehiculoNoAutorizadoException("No hay parqueadero disponible para el vehiculo");
 		}
+		return true;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public void validarHabilitacion(String placa) {
+	public boolean validarHabilitacion(String placa) {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
 		if ("A".equalsIgnoreCase(placa.substring(0, 1))
-				&& (cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 2)) {
-			throw new VehiculoNoAutorizadoException("El vehiculo no esta autorizado para ingresar");
+				&& (cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 2)) {			
+			throw new VehiculoNoAutorizadoException("El vehiculo no esta autorizado para ingresar");			
 		}
+		return true;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public void estaRegistrado(String placa) {
+	public boolean estaRegistrado(String placa) {
 		if (vehiculoDao.estaRegistrado(placa) == 1) {
 			throw new VehiculoNoAutorizadoException("El vehiculo ya se encuentra registrado en el sistema");
 		}
+		return true;
 	}
 
 }

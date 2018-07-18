@@ -12,10 +12,10 @@ public interface IVehiculoService {
 
 	public Vehiculo findById(Long id);
 
-	public void validarDisponibilidad(String tipo);
+	public boolean validarDisponibilidad(String tipo);
 
-	public void validarHabilitacion(String placa);
+	public boolean validarHabilitacion(String placa);
 
-	public void estaRegistrado(String placa);
+	public boolean estaRegistrado(String placa);
 
 }
