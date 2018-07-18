@@ -24,9 +24,6 @@ public class FacturaRestController {
 	@Autowired
 	private IFacturaService facturaService;
 	
-	@Autowired
-	private IFacturaService vehiculoService;
-
 	@PostMapping("/facturar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Factura create(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {

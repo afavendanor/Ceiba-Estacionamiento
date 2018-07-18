@@ -15,13 +15,11 @@ public class VehiculoTestDataBluilder {
 	private String placa;
 	private TipoVehiculo tipo;
 	private int cilindraje;
-	private boolean activo;
 	private Date fechaIngreso;
 
 	public VehiculoTestDataBluilder() {
 		this.placa = PLACA;
 		this.tipo = TIPO;
-		this.activo = true;
 		this.cilindraje = CILINDRAJE;
 		Date fechaSolicitud = new Date();
 		Calendar calendar = Calendar.getInstance();
@@ -45,7 +43,6 @@ public class VehiculoTestDataBluilder {
 	}
 
 	public VehiculoTestDataBluilder conActivo(boolean activo) {
-		this.activo = activo;
 		return this;
 	}
 
