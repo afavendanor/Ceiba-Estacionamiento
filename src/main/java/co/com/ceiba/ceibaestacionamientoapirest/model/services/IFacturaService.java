@@ -11,6 +11,6 @@ public interface IFacturaService {
 	
 	public double valorAPagar(Vehiculo vehiculo, Date fechaSalida);
 	
-	public void cambiarEstadoVehiculo(Long id);
+	public boolean cambiarEstadoVehiculo(Long id);
 
 }

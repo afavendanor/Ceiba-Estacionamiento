@@ -19,8 +19,12 @@ public class FacturaServiceImp implements IFacturaService {
 	private static final int MAXIMO_HORAS_DIA = 9;
 	private static final int HORAS_DIA = 24;
 
-	@Autowired
 	private IFacturaDao facturaDao;
+	
+	@Autowired
+	public FacturaServiceImp(IFacturaDao facturaDao) {
+		this.facturaDao = facturaDao;
+	}
 
 	@Override
 	@Transactional
@@ -65,8 +69,9 @@ public class FacturaServiceImp implements IFacturaService {
 
 	@Override
 	@Transactional
-	public void cambiarEstadoVehiculo(Long id) {
-		facturaDao.cambiarEstadoVehiculo(id);		
+	public boolean cambiarEstadoVehiculo(Long id) {
+		facturaDao.cambiarEstadoVehiculo(id);
+		return true;
 	}
 
 }
