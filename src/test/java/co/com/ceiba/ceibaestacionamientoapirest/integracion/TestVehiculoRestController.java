@@ -20,7 +20,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.CeibaEstacionamientoApiRestAppli
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = CeibaEstacionamientoApiRestApplication.class)
 @AutoConfigureMockMvc
-@TestPropertySource(locations="classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 /* @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2) */
 
 public class TestVehiculoRestController {
@@ -32,6 +32,13 @@ public class TestVehiculoRestController {
 	public void listarVehiculos() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos").accept(MediaType.APPLICATION_JSON))
+				.andDo(print()).andExpect(status().isOk()).andReturn();
+
+	}
+
+	@Test
+	public void buscarVehiculo() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/1").accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 
 	}

@@ -36,7 +36,7 @@ public class TestVehiculo {
 	}
 
 	@Test
-	public void disponibilidadParqueaderoCarros() {
+	public void validarDisponibilidadParqueaderoCarros() {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.CARRO.toString()))
 				.thenReturn((int) Constantes.NUMERO_CARROS_PERMITIDOS - 1);
 
@@ -46,7 +46,7 @@ public class TestVehiculo {
 	}
 	
 	@Test
-	public void noDisponibilidadParqueaderoCarros() {
+	public void validarNoDisponibilidadParqueaderoCarros() {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.CARRO.toString()))
 				.thenReturn((int) Constantes.NUMERO_CARROS_PERMITIDOS);
 		try {
@@ -57,7 +57,7 @@ public class TestVehiculo {
 	}
 	
 	@Test
-	public void disponibilidadParqueaderoMotos() {
+	public void validarDisponibilidadParqueaderoMotos() {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.CARRO.toString()))
 				.thenReturn((int) Constantes.NUMERO_MOTOS_PERMITIDAS - 1);
 
@@ -67,7 +67,7 @@ public class TestVehiculo {
 	}
 	
 	@Test
-	public void noDisponibilidadParqueaderoMotos() {
+	public void validarNoDisponibilidadParqueaderoMotos() {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.MOTO.toString()))
 				.thenReturn((int) Constantes.NUMERO_MOTOS_PERMITIDAS);
 
@@ -80,7 +80,7 @@ public class TestVehiculo {
 	}
 	
 	@Test
-	public void vehiculoNoRegitrado() {
+	public void ValidarVehiculoNoRegitrado() {
 		Mockito.when(vehiculoDao.estaRegistrado(PLACA_CON_A)).thenReturn(0);
 
 		respuesta = vehiculoService.estaRegistrado(PLACA_CON_A);
@@ -90,7 +90,7 @@ public class TestVehiculo {
 	}
 	
 	@Test
-	public void VehiculoRegistrado() {
+	public void validarVehiculoRegistrado() {
 		Mockito.when(vehiculoDao.estaRegistrado(PLACA_SIN_A)).thenReturn(1);
 		
 		try {

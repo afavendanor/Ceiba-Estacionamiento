@@ -34,6 +34,12 @@ public class VehiculoRestController {
         }
 		return new ResponseEntity<>(vehiculos, HttpStatus.OK);
 	}
+	
+	@GetMapping("/vehiculos/{id}")
+	public ResponseEntity<Vehiculo> buscarVehiculo( @PathVariable Long id) {
+		Vehiculo vehiculo  = vehiculoService.findById(id);
+		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
+	}
 
 	@PostMapping("/vehiculo")
 	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
@@ -43,7 +49,7 @@ public class VehiculoRestController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/vehiculos/{id}")
+	@PutMapping("/vehiculo/{id}")
 	public ResponseEntity<Vehiculo> cambiarEstadoVehiculo(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
 		Vehiculo currentVehiculo = this.vehiculoService.findById(id);
 		if (currentVehiculo == null) {
