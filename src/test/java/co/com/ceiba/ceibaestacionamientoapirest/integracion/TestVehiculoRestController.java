@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -14,16 +16,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import co.com.ceiba.ceibaestacionamientoapirest.CeibaEstacionamientoApiRestApplication;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
+	classes = CeibaEstacionamientoApiRestApplication.class)
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+
 public class TestVehiculoRestController {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
-	public void postVehiculo() throws Exception {
+	public void listarVehiculos() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/").accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
