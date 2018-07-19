@@ -1,6 +1,7 @@
 package co.com.ceiba.ceibaestacionamientoapirest.unitaria;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -21,6 +22,7 @@ public class TestVehiculo {
 
 	private boolean respuesta;
 	private static final String PLACA_SIN_A = "NWK23D";
+	private static final String PLACA_CON_A = "ADN04A";
 	private IVehiculoService vehiculoService;
 
 	@Mock
@@ -78,17 +80,17 @@ public class TestVehiculo {
 	}
 	
 	@Test
-	public void estaRegistrado() {
-		Mockito.when(vehiculoDao.estaRegistrado(PLACA_SIN_A)).thenReturn(0);
+	public void vehiculoNoRegitrado() {
+		Mockito.when(vehiculoDao.estaRegistrado(PLACA_CON_A)).thenReturn(0);
 
-		respuesta = vehiculoService.estaRegistrado(PLACA_SIN_A);
+		respuesta = vehiculoService.estaRegistrado(PLACA_CON_A);
 
-		assertTrue(respuesta);
+		assertFalse(respuesta);
 
 	}
 	
 	@Test
-	public void noEstaRegistrado() {
+	public void VehiculoRegistrado() {
 		Mockito.when(vehiculoDao.estaRegistrado(PLACA_SIN_A)).thenReturn(1);
 		
 		try {

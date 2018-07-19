@@ -10,7 +10,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 
 public interface IVehiculoDao extends CrudRepository<Vehiculo, Long>{
 	
-	@Query("select v from Vehiculo v where v.activo = true")
+	@Query("select v from Vehiculo v where v.activo = TRUE")
 	public List<Vehiculo> findAll();
 	
 	@Query("SELECT COUNT(*) FROM Vehiculo v WHERE v.tipo=:tipo AND v.activo = TRUE")

@@ -28,15 +28,14 @@ public class VehiculoRestController {
 
 	@GetMapping("/vehiculos")
 	public ResponseEntity<List<Vehiculo>> listarVehiculos() {
-		List<Vehiculo> vehiculos;
-		vehiculos = vehiculoService.findAll();
+		List<Vehiculo> vehiculos  = vehiculoService.findAll();
 		if (vehiculos.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 		return new ResponseEntity<>(vehiculos, HttpStatus.OK);
 	}
 
-	@PostMapping("/vehiculos")
+	@PostMapping("/vehiculo")
 	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
 		vehiculo.setFechaIngreso(new Date());
 		vehiculoService.estaRegistrado(vehiculo.getPlaca());
