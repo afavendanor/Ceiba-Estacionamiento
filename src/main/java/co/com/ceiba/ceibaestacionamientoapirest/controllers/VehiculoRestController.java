@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVehiculoService;
 
@@ -35,12 +34,8 @@ public class VehiculoRestController {
 	@GetMapping("/vehiculos")
 	public ResponseEntity<Object> findAll() {
 		List<Vehiculo> vehiculos;
-		try {
-			vehiculos = vehiculoService.findAll();
-			return new ResponseEntity<>(vehiculos, HttpStatus.OK);
-		} catch (VehiculoNoAutorizadoException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-		}
+		vehiculos = vehiculoService.findAll();
+		return new ResponseEntity<>(vehiculos, HttpStatus.OK);
 	}
 
 	@PostMapping("/vehiculos")
