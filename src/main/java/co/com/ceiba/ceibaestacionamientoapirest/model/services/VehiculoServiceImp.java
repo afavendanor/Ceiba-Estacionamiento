@@ -72,7 +72,7 @@ public class VehiculoServiceImp implements IVehiculoService {
 		if (vehiculoDao.estaRegistrado(placa) == 1) {
 			throw new VehiculoNoAutorizadoException("El vehiculo ya se encuentra registrado en el sistema");
 		}
-		return true;
+		return false;
 	}
 
 }
