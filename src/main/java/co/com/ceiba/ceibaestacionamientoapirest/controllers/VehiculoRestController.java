@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVehiculoService;
 
@@ -22,16 +24,25 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVehiculoService;
 @RestController
 @RequestMapping("/api")
 public class VehiculoRestController {
-	
-	@Autowired
+
 	private IVehiculoService vehiculoService;
 
-	@GetMapping("/vehiculos")
-	public List<Vehiculo> index() {
-		return vehiculoService.findAll();
+	@Autowired
+	public VehiculoRestController(IVehiculoService vehiculoService) {
+		this.vehiculoService = vehiculoService;
 	}
-	
-	
+
+	@GetMapping("/vehiculos")
+	public ResponseEntity<Object> findAll() {
+		List<Vehiculo> vehiculos;
+		try {
+			vehiculos = vehiculoService.findAll();
+		} catch (VehiculoNoAutorizadoException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+		return new ResponseEntity<>(vehiculos, HttpStatus.OK);
+	}
+
 	@PostMapping("/vehiculos")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Vehiculo create(@RequestBody Vehiculo vehiculo) {
@@ -39,7 +50,7 @@ public class VehiculoRestController {
 		this.vehiculoService.save(vehiculo);
 		return vehiculo;
 	}
-	
+
 	@PutMapping("/vehiculos/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Vehiculo update(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
@@ -51,5 +62,5 @@ public class VehiculoRestController {
 		this.vehiculoService.save(currentVehiculo);
 		return currentVehiculo;
 	}
-	
+
 }
