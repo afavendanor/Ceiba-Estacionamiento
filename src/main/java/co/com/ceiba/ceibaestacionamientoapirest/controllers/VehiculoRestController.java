@@ -37,10 +37,10 @@ public class VehiculoRestController {
 		List<Vehiculo> vehiculos;
 		try {
 			vehiculos = vehiculoService.findAll();
+			return new ResponseEntity<>(vehiculos, HttpStatus.OK);
 		} catch (VehiculoNoAutorizadoException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
-		return new ResponseEntity<>(vehiculos, HttpStatus.OK);
 	}
 
 	@PostMapping("/vehiculos")
