@@ -1,7 +1,5 @@
 package co.com.ceiba.ceibaestacionamientoapirest.controllers;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,16 +32,7 @@ public class FacturaRestController {
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }		
 		currentVehiculo.setActivo(false);
-		this.vehiculoService.save(currentVehiculo);
-		
-		Factura factura = new Factura();
-		factura.setFechaIngreso(currentVehiculo.getFechaIngreso());
-		factura.setPlaca(currentVehiculo.getPlaca());
-		factura.setFechaSalida(new Date());
-		factura.setTotalAPagar(facturaService.valorAPagar(currentVehiculo, factura.getFechaSalida()));
-		facturaService.cambiarEstadoVehiculo(currentVehiculo.getId());
-		this.facturaService.save(factura);
-		
-		return new ResponseEntity<>(factura, HttpStatus.OK);
+		this.vehiculoService.save(currentVehiculo, "update");		
+		return new ResponseEntity<>(this.facturaService.generarFactura(currentVehiculo), HttpStatus.OK);
 	}
 }

@@ -1,6 +1,5 @@
 package co.com.ceiba.ceibaestacionamientoapirest.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,25 +40,22 @@ public class VehiculoRestController {
 		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
 	}
 
-	@PostMapping("/vehiculo")
+	@PostMapping("/guardarVehiculo")
 	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
-		vehiculo.setFechaIngreso(new Date());
-		vehiculoService.estaRegistrado(vehiculo.getPlaca());
-		this.vehiculoService.save(vehiculo);
+		this.vehiculoService.save(vehiculo, "save");
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/vehiculo/{id}")
-	public ResponseEntity<Vehiculo> cambiarEstadoVehiculo(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
+	@PutMapping("/editarVehiculo/{id}")	
+	public ResponseEntity<Vehiculo> actualizarVehiculo(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
 		Vehiculo currentVehiculo = this.vehiculoService.findById(id);
 		if (currentVehiculo == null) {
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }		
-		currentVehiculo.setPlaca(vehiculo.getPlaca());
+        }	
 		currentVehiculo.setCilindraje(vehiculo.getCilindraje());
+		currentVehiculo.setPlaca(vehiculo.getPlaca());
 		currentVehiculo.setTipo(vehiculo.getTipo());
-		currentVehiculo.setActivo(vehiculo.isActivo());
-		this.vehiculoService.save(currentVehiculo);
+		this.vehiculoService.save(currentVehiculo, "update");
 		return new ResponseEntity<>(currentVehiculo, HttpStatus.OK);
 	}
 

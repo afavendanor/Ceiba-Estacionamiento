@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 public interface IVehiculoDao extends CrudRepository<Vehiculo, Long>{
 	
@@ -14,7 +15,7 @@ public interface IVehiculoDao extends CrudRepository<Vehiculo, Long>{
 	public List<Vehiculo> findAll();
 	
 	@Query("SELECT COUNT(*) FROM Vehiculo v WHERE v.tipo=:tipo AND v.activo = TRUE")
-    public int vehiculosParqueados(@Param("tipo") String tipo);
+    public int vehiculosParqueados(@Param("tipo") TipoVehiculo tipo);
 	
 	@Query("SELECT COUNT(*) FROM Vehiculo v WHERE v.placa=:placa")
 	public int estaRegistrado(@Param("placa") String placa);
