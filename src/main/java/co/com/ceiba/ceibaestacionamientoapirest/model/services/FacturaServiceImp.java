@@ -1,6 +1,7 @@
 package co.com.ceiba.ceibaestacionamientoapirest.model.services;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,12 @@ public class FacturaServiceImp implements IFacturaService {
 	@Autowired
 	public FacturaServiceImp(IFacturaDao facturaDao) {
 		this.facturaDao = facturaDao;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Factura> findAll() {
+		return facturaDao.findAll();
 	}
 
 	@Override

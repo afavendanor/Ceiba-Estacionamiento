@@ -3,7 +3,7 @@ package co.com.ceiba.ceibaestacionamientoapirest.integracion;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Date;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +17,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.com.ceiba.ceibaestacionamientoapirest.CeibaEstacionamientoApiRestApplication;
+import co.com.ceiba.ceibaestacionamientoapirest.databuilder.VehiculoTestDataBluilder;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
-import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = CeibaEstacionamientoApiRestApplication.class)
@@ -35,7 +36,7 @@ public class TestVehiculoRestController {
 
 	@Autowired
 	private ObjectMapper objectMapper;
-
+	
 	@Test
 	public void listarVehiculos() throws Exception {
 
@@ -54,14 +55,20 @@ public class TestVehiculoRestController {
 	@Test
 	public void buscarVehiculoNoExistente() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/{id}", -3L).accept(MediaType.APPLICATION_JSON))
-				.andDo(print()).andExpect(status().isOk()).andReturn();
+				.andDo(print()).andExpect(status().isNotFound()).andReturn();
 	}
 
-	/*
 	@Test
 	public void agregarVehiculo() throws Exception {
+		
+		VehiculoTestDataBluilder vehiculoTestDataBluilder = new VehiculoTestDataBluilder();
+
+		Vehiculo vehiculo = vehiculoTestDataBluilder.build();
+		
+		String json = objectMapper.writeValueAsString(vehiculo);
+
 		this.mockMvc.perform(MockMvcRequestBuilders.post("api/guardarVehiculo").accept(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new Vehiculo("NDH63D", TipoVehiculo.MOTO, 1200, new Date())))).andExpect(status().isOk());
+				.contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
 	}
 
 	/*
@@ -77,6 +84,14 @@ public class TestVehiculoRestController {
 	 * 
 	 * assertEquals(HttpStatus.CREATED, responseEntityIngreso.getStatusCode()); }
 	 */
-	
+
+	private String toJsonString(Map<String, ?> map) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			return objectMapper.writeValueAsString(map);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

@@ -37,6 +37,9 @@ public class VehiculoRestController {
 	@GetMapping("/vehiculos/{id}")
 	public ResponseEntity<Vehiculo> buscarVehiculo( @PathVariable Long id) {
 		Vehiculo vehiculo  = vehiculoService.findById(id);
+		if (vehiculo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
 	}
 
