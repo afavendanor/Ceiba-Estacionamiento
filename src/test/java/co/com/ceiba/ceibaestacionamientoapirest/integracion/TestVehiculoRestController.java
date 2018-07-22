@@ -17,8 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import co.com.ceiba.ceibaestacionamientoapirest.CeibaEstacionamientoApiRestApplication;
-import co.com.ceiba.ceibaestacionamientoapirest.databuilder.VehiculoTestDataBluilder;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
@@ -31,6 +32,9 @@ public class TestVehiculoRestController {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Test
 	public void listarVehiculos() throws Exception {
@@ -46,34 +50,33 @@ public class TestVehiculoRestController {
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 
 	}
-	
+
 	@Test
 	public void buscarVehiculoNoExistente() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/{id}", -3L).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 	}
-	
-	@Test
-	public void agregarVehiculo() throws Exception {
-		Vehiculo vehiculo = new VehiculoTestDataBluilder().conPlaca("XXX12D").conTipo(TipoVehiculo.MOTO)
-				.conCilindraje(180).conFechaIngreso(new Date()).build();
-		
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/guardarVehiculo", vehiculo).accept(MediaType.APPLICATION_JSON))
-				.andDo(print()).andExpect(status().isCreated()).andReturn();
-	}
 
 	/*
 	@Test
-	public void agregarVehiculoTest() {
-
-		Vehiculo vehiculo = new VehiculoTestDataBluilder().conPlaca("XXX12D").conTipo(TipoVehiculo.MOTO)
-				.conCilindraje(180).conFechaIngreso(new Date()).build();
-
-		ResponseEntity<Vehiculo> responseEntityIngreso = restTemplate
-				.postForEntity("http://localhost:3001/api/vehiculo", vehiculo, Vehiculo.class);
-
-		assertEquals(HttpStatus.CREATED, responseEntityIngreso.getStatusCode());
+	public void agregarVehiculo() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.post("api/guardarVehiculo").accept(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(new Vehiculo("NDH63D", TipoVehiculo.MOTO, 1200, new Date())))).andExpect(status().isOk());
 	}
-	*/
+
+	/*
+	 * @Test public void agregarVehiculoTest() {
+	 * 
+	 * Vehiculo vehiculo = new
+	 * VehiculoTestDataBluilder().conPlaca("XXX12D").conTipo(TipoVehiculo.MOTO)
+	 * .conCilindraje(180).conFechaIngreso(new Date()).build();
+	 * 
+	 * ResponseEntity<Vehiculo> responseEntityIngreso = restTemplate
+	 * .postForEntity("http://localhost:3001/api/vehiculo", vehiculo,
+	 * Vehiculo.class);
+	 * 
+	 * assertEquals(HttpStatus.CREATED, responseEntityIngreso.getStatusCode()); }
+	 */
+	
 
 }
