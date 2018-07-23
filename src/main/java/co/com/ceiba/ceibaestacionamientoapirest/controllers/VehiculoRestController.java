@@ -1,5 +1,6 @@
 package co.com.ceiba.ceibaestacionamientoapirest.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class VehiculoRestController {
 
 	@PostMapping("/guardarVehiculo")
 	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
+		vehiculo.setFechaIngreso(new Date());
 		this.vehiculoService.save(vehiculo, "save");
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
