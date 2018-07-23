@@ -46,6 +46,7 @@ public class VehiculoRestController {
 
 	@PostMapping("/guardarVehiculo")
 	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
+		vehiculo.setActivo(true);
 		vehiculo.setFechaIngreso(new Date());
 		this.vehiculoService.save(vehiculo, "save");
 		return new ResponseEntity<>(HttpStatus.CREATED);
