@@ -9,7 +9,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public class Parqueadero {
+public final class Parqueadero {
 
 	private static final int SEGUNDOS_HORA = 3600;
 	private static final int MAXIMO_HORAS_DIA = 9;

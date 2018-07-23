@@ -31,16 +31,24 @@ public class TestFacturaRestController {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/facturas").accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
-
 	}
 	
 	@Test
-	public void agregarVehiculo() throws Exception {
+	public void facturarVehiculo() throws Exception {
 		
 		String json = "{ \"placa\": \"MNE58G\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/facturar/{id}", 1L).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void facturarVehiculoNoIngresado() throws Exception {
+		
+		String json = "{ \"placa\": \"MNE58G\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/facturar/{id}", -3L).accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isNotFound());
 	}
 
 
