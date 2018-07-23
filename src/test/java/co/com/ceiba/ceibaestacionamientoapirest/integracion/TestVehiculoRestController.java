@@ -50,15 +50,20 @@ public class TestVehiculoRestController {
 
 	@Test
 	public void agregarVehiculo() throws Exception {
-		
+
 		String json = "{ \"placa\": \"MNE58G\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/guardarVehiculo").accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isCreated());
 	}
 
+	@Test
+	public void modificarVehiculo() throws Exception {
 
+		String json = "{ \"placa\": \"MNE58A\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";
 
-
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/editarVehiculo/{id}", 1L).accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
+	}
 
 }
