@@ -33,11 +33,18 @@ public class FacturaServiceImp implements IFacturaService {
 	@Transactional
 	public Factura generarFactura(Vehiculo vehiculo) {
 		Factura factura = new Factura();
+		Date fechaSalida = new Date();
 		factura.setFechaIngreso(vehiculo.getFechaIngreso());
 		factura.setPlaca(vehiculo.getPlaca());
-		factura.setFechaSalida(new Date());
-		factura.setTotalAPagar(parqueadero.calcularValorAPagar(vehiculo, factura.getFechaSalida()));
+		factura.setFechaSalida(fechaSalida);
+		factura.setTotalAPagar(parqueadero.calcularValorAPagar(vehiculo, fechaSalida));
 		return this.facturaDao.save(factura);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Factura findById(Long id) {
+		return this.facturaDao.findById(id).orElse(null);
 	}
 
 }

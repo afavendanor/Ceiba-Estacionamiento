@@ -34,6 +34,19 @@ public class TestFacturaRestController {
 	}
 	
 	@Test
+	public void buscarFactura() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/facturas/{id}", 1L).accept(MediaType.APPLICATION_JSON))
+				.andDo(print()).andExpect(status().isOk()).andReturn();
+
+	}
+
+	@Test
+	public void buscarVehiculoNoExistente() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/facturas/{id}", -3L).accept(MediaType.APPLICATION_JSON))
+				.andDo(print()).andExpect(status().isNotFound()).andReturn();
+	}
+	
+	@Test
 	public void facturarVehiculo() throws Exception {
 		
 		String json = "{ \"placa\": \"MNE58G\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";

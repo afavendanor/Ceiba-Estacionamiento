@@ -47,4 +47,13 @@ public class FacturaRestController {
 		this.vehiculoService.save(currentVehiculo, "update");
 		return new ResponseEntity<>(this.facturaService.generarFactura(currentVehiculo), HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/facturas/{id}")
+	public ResponseEntity<Factura> buscarFactura( @PathVariable Long id) {
+		Factura factura  = facturaService.findById(id);
+		if (factura == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+		return new ResponseEntity<>(factura, HttpStatus.OK);
+	}
 }

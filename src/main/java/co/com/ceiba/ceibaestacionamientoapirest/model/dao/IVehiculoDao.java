@@ -17,7 +17,7 @@ public interface IVehiculoDao extends CrudRepository<Vehiculo, Long>{
 	@Query("SELECT COUNT(*) FROM Vehiculo v WHERE v.tipo=:tipo AND v.activo = TRUE")
     public int vehiculosParqueados(@Param("tipo") TipoVehiculo tipo);
 	
-	@Query("SELECT COUNT(*) FROM Vehiculo v WHERE v.placa=:placa")
+	@Query("SELECT COUNT(*) FROM Vehiculo v WHERE v.placa=:placa AND v.activo = TRUE")
 	public int estaRegistrado(@Param("placa") String placa);
 
 }

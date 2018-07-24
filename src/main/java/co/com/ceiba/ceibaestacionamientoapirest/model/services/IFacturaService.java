@@ -10,5 +10,7 @@ public interface IFacturaService {
 	public Factura generarFactura(Vehiculo vehiculo);
 	
 	public List<Factura> findAll();
+	
+	public Factura findById(Long id);
 
 }
