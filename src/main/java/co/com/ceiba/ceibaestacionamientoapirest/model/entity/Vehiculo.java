@@ -29,6 +29,7 @@ public class Vehiculo implements Serializable {
 	private String placa;
 	
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private TipoVehiculo tipo;
 	
 	private int cilindraje;
