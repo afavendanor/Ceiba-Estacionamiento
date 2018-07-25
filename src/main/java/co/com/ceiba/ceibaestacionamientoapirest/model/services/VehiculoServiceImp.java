@@ -32,6 +32,8 @@ public class VehiculoServiceImp implements IVehiculoService {
 	@Override
 	@Transactional
 	public Vehiculo save(Vehiculo vehiculo, String accion) {
+		parqueadero.validarNulos(vehiculo.getPlaca());
+		parqueadero.validarNulos(String.valueOf(vehiculo.getTipo()));
 		if ("save".equals(accion)) {
 			parqueadero.validarEstaRegistrado(vehiculoDao.estaRegistrado(vehiculo.getPlaca()));
 			parqueadero.validarDisponibilidad(vehiculo.getTipo(), vehiculosRegistrados(vehiculo.getTipo()));

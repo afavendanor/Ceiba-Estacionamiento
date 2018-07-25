@@ -83,7 +83,7 @@ public final class Parqueadero {
 	}
 
 	public boolean validarEstaRegistrado(int estaRegistrado) {
-		if (estaRegistrado == 1) {
+		if (estaRegistrado >= 1) {
 			throw new VehiculoNoAutorizadoException("El vehiculo ya se encuentra registrado en el sistema");
 		}
 		return false;
@@ -91,6 +91,13 @@ public final class Parqueadero {
 
 	public boolean validarPlacaConA(String placa) {
 		return "A".equalsIgnoreCase(placa.substring(0, 1));
+	}
+	
+	public boolean validarNulos(String dato) {
+		if ("null".equals(dato) || dato == null || dato.isEmpty()) {
+			throw new VehiculoNoAutorizadoException("Hay datos obligatorios que no han sido ingresados");
+		}
+		return true;
 	}
 
 }
