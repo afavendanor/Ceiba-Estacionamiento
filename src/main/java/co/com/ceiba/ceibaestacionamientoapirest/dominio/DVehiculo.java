@@ -5,7 +5,7 @@ import java.util.Date;
 
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 
-public class DVehiculo {
+public final class DVehiculo {
 	
 	private static DVehiculo vehiculo;
 
@@ -23,6 +23,7 @@ public class DVehiculo {
 	public void validarHabilitacion(String placa, Date fecha) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(fecha);
+		System.out.println("-----------> " + cal.get(Calendar.DAY_OF_WEEK));
 		if (validarPlacaConA(placa)
 				&& (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY || cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)) {
 			throw new VehiculoNoAutorizadoException("El vehiculo no esta autorizado para ingresar");

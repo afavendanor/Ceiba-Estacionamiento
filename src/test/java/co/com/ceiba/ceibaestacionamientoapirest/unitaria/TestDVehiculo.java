@@ -5,7 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Before;
@@ -53,23 +54,34 @@ public class TestDVehiculo {
 	}
 
 	@Test
-	public void validarHabilitacion() {
+	public void validarHabilitacion() throws ParseException {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String stringFechaConHora = "2018-07-22 15:03:23";
+		Date fecha = sdf.parse(stringFechaConHora);
 		try {
-			Date fecha = new Date();
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(fecha);
 			vehiculo.validarHabilitacion(PLACA_CON_A, fecha);
-			if ((cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY
-					|| cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)) {
-				assertFalse(respuesta);
-			} else {
-				fail();
-			}
+			fail();
 		} catch (VehiculoNoAutorizadoException e) {
 			assertEquals("El vehiculo no esta autorizado para ingresar", e.getMessage());
+
 		}
 
+	}
+
+	@Test
+	public void validarNoHabilitacion() throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String stringFechaConHora = "2018-07-25 15:03:23";
+		Date fecha = sdf.parse(stringFechaConHora);
+		try {
+			vehiculo.validarHabilitacion(PLACA_CON_A, fecha);
+			fail();
+		} catch (VehiculoNoAutorizadoException e) {
+			assertEquals("El vehiculo no esta autorizado para ingresar", e.getMessage());
+
+		}
 	}
 
 }
