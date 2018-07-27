@@ -1,5 +1,6 @@
 package co.com.ceiba.ceibaestacionamientoapirest.model.services;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ public class VehiculoServiceImp implements IVehiculoService {
 		vigilante.validarNulos(String.valueOf(vehiculo.getTipo()));
 		vigilante.validarEstaRegistrado(vehiculoDao.estaRegistrado(vehiculo.getPlaca()));
 		vigilante.validarDisponibilidad(vehiculo.getTipo(), vehiculosRegistrados(vehiculo.getTipo()));
-		dvehiculo.validarHabilitacion(vehiculo.getPlaca(), vehiculo.getFechaIngreso());	
+		Calendar fecha = Calendar.getInstance();
+		fecha.setTime(vehiculo.getFechaIngreso());
+		dvehiculo.validarHabilitacion(vehiculo.getPlaca(), fecha);	
 		return vehiculoDao.save(vehiculo);
 	}
 	

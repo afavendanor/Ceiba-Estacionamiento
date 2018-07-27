@@ -1,7 +1,6 @@
 package co.com.ceiba.ceibaestacionamientoapirest.dominio;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 
@@ -20,14 +19,12 @@ public final class DVehiculo {
 		return vehiculo;
 	}
 	
-	public void validarHabilitacion(String placa, Date fecha) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(fecha);
-		System.out.println("-----------> " + cal.get(Calendar.DAY_OF_WEEK));
+	public boolean validarHabilitacion(String placa, Calendar fecha) {
 		if (validarPlacaConA(placa)
-				&& (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY || cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)) {
+				&& !(fecha.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || fecha.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)) {
 			throw new VehiculoNoAutorizadoException("El vehiculo no esta autorizado para ingresar");
 		}
+		return true;
 	}
 	
 	public boolean validarPlacaConA(String placa) {

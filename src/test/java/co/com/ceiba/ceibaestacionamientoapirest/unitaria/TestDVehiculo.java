@@ -3,10 +3,9 @@ package co.com.ceiba.ceibaestacionamientoapirest.unitaria;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
@@ -56,28 +55,23 @@ public class TestDVehiculo {
 	@Test
 	public void validarHabilitacion() throws ParseException {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String stringFechaConHora = "2018-07-22 15:03:23";
-		Date fecha = sdf.parse(stringFechaConHora);
-		try {
-			vehiculo.validarHabilitacion(PLACA_CON_A, fecha);
-			fail();
-		} catch (VehiculoNoAutorizadoException e) {
-			assertEquals("El vehiculo no esta autorizado para ingresar", e.getMessage());
+	
+		Calendar fecha = Calendar.getInstance();
+		fecha.setTime(new Date());
+		fecha.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 
-		}
+		assertTrue(vehiculo.validarHabilitacion(PLACA_CON_A, fecha));
 
 	}
 
 	@Test
 	public void validarNoHabilitacion() throws ParseException {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String stringFechaConHora = "2018-07-25 15:03:23";
-		Date fecha = sdf.parse(stringFechaConHora);
+		Calendar fecha = Calendar.getInstance();
+		fecha.setTime(new Date());
+		fecha.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
 		try {
 			vehiculo.validarHabilitacion(PLACA_CON_A, fecha);
-			fail();
 		} catch (VehiculoNoAutorizadoException e) {
 			assertEquals("El vehiculo no esta autorizado para ingresar", e.getMessage());
 

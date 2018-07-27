@@ -16,7 +16,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 public class FacturaServiceImp implements IFacturaService {
 
 	private IFacturaDao facturaDao;
-	DVigilante parqueadero = DVigilante.getInstance();
+	DVigilante vigilante = DVigilante.getInstance();
 
 	@Autowired
 	public FacturaServiceImp(IFacturaDao facturaDao) {
@@ -32,13 +32,16 @@ public class FacturaServiceImp implements IFacturaService {
 	@Override
 	@Transactional
 	public Factura generarFactura(Vehiculo vehiculo) {
+		
 		Factura factura = new Factura();
-		Date fechaSalida = new Date();
+		Date fechaSalida = new Date();		
 		factura.setFechaIngreso(vehiculo.getFechaIngreso());
 		factura.setPlaca(vehiculo.getPlaca());
-		factura.setFechaSalida(fechaSalida);
-		factura.setTotalAPagar(parqueadero.calcularValorAPagar(vehiculo, fechaSalida));
+		factura.setFechaSalida(fechaSalida);		
+		factura.setTotalAPagar(vigilante.calcularValorAPagar(vehiculo, fechaSalida));
+
 		return this.facturaDao.save(factura);
+		
 	}
 	
 	@Override
