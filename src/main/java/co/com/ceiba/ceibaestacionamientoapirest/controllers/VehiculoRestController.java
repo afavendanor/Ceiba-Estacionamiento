@@ -44,14 +44,14 @@ public class VehiculoRestController {
 		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
 	}
 
-	@PostMapping("/guardarVehiculo")
+	@PostMapping("/crearVehiculo")
 	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
 		vehiculo.setActivo(true);
 		vehiculo.setFechaIngreso(new Date());
-		this.vehiculoService.save(vehiculo, "save");
+		this.vehiculoService.save(vehiculo);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
+		
 	@PutMapping("/editarVehiculo/{id}")	
 	public ResponseEntity<Vehiculo> actualizarVehiculo(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
 		Vehiculo currentVehiculo = this.vehiculoService.findById(id);
@@ -61,7 +61,7 @@ public class VehiculoRestController {
 		currentVehiculo.setCilindraje(vehiculo.getCilindraje());
 		currentVehiculo.setPlaca(vehiculo.getPlaca());
 		currentVehiculo.setTipo(vehiculo.getTipo());
-		this.vehiculoService.save(currentVehiculo, "update");
+		this.vehiculoService.update(currentVehiculo);
 		return new ResponseEntity<>(currentVehiculo, HttpStatus.OK);
 	}
 

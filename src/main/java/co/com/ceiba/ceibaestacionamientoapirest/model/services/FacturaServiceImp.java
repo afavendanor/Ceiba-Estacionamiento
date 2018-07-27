@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.com.ceiba.ceibaestacionamientoapirest.dominio.Parqueadero;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVigilante;
 import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IFacturaDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
@@ -16,7 +16,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 public class FacturaServiceImp implements IFacturaService {
 
 	private IFacturaDao facturaDao;
-	Parqueadero parqueadero = Parqueadero.getInstance();
+	DVigilante parqueadero = DVigilante.getInstance();
 
 	@Autowired
 	public FacturaServiceImp(IFacturaDao facturaDao) {

@@ -1,13 +1,12 @@
 package co.com.ceiba.ceibaestacionamientoapirest.unitaria;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,19 +14,18 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import co.com.ceiba.ceibaestacionamientoapirest.dominio.Parqueadero;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVigilante;
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public class TestParqueadero {
+public class TestDVigilante {
 
-	Parqueadero parqueadero;
+	DVigilante vigilante;
 	private boolean respuesta;
 	private static final String PLACA_CON_A = "ADN04A";
-	private static final String PLACA_SIN_A = "NWK23D";
 
 	@Mock
 	private IVehiculoDao vehiculoDao;
@@ -36,7 +34,7 @@ public class TestParqueadero {
 	public void mocksInitialization() {
 		MockitoAnnotations.initMocks(this);
 
-		parqueadero = Parqueadero.getInstance();
+		vigilante = DVigilante.getInstance();
 	}
 
 	@Test
@@ -56,7 +54,7 @@ public class TestParqueadero {
 		vehiculo.setPlaca("ASE456");
 		vehiculo.setFechaIngreso(fechaIngreso);
 
-		assertEquals(2000.0, parqueadero.calcularValorAPagar(vehiculo, fechaSalida), 0.0);
+		assertEquals(2000.0, vigilante.calcularValorAPagar(vehiculo, fechaSalida), 0.0);
 	}
 
 	@Test
@@ -77,35 +75,63 @@ public class TestParqueadero {
 		vehiculo.setPlaca("ASE456");
 		vehiculo.setFechaIngreso(fechaIngreso);
 
-		assertEquals(11000.0, parqueadero.calcularValorAPagar(vehiculo, fechaSalida), 0.0);
+		assertEquals(11000.0, vigilante.calcularValorAPagar(vehiculo, fechaSalida), 0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarHorasADia() {
+
+		Date fechaSolicitud = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaSolicitud);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date fechaSalida = calendar.getTime();
+		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 35);
+		Date fechaIngreso = calendar.getTime();
+		Vehiculo vehiculo = new Vehiculo();
+		vehiculo.setTipo(TipoVehiculo.CARRO);
+		vehiculo.setPlaca("ASE456");
+		vehiculo.setFechaIngreso(fechaIngreso);
+
+		assertEquals(16000.0, vigilante.calcularValorAPagar(vehiculo, fechaSalida), 0.0);
+	}
+	
+	@Test
+	public void calcularValorAPagarDiasMotoCilindrajeMayor() {
+
+		Date fechaSolicitud = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaSolicitud);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date fechaSalida = calendar.getTime();
+		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 51);
+		Date fechaIngreso = calendar.getTime();
+		Vehiculo vehiculo = new Vehiculo();
+		vehiculo.setTipo(TipoVehiculo.MOTO);
+		vehiculo.setPlaca("ASE456");
+		vehiculo.setFechaIngreso(fechaIngreso);
+		vehiculo.setCilindraje(1200);
+
+		assertEquals(11500.0, vigilante.calcularValorAPagar(vehiculo, fechaSalida), 0.0);
 	}
 
 	@Test
-	public void ValidarVehiculoNoRegitrado() {
+	public void validarEstaRegistrado() {
 
-		Mockito.when(vehiculoDao.estaRegistrado(PLACA_CON_A)).thenReturn(0);
+		Mockito.when(vehiculoDao.estaRegistrado(PLACA_CON_A)).thenReturn(1);
 
-		respuesta = parqueadero.validarEstaRegistrado(0);
-
-		assertFalse(respuesta);
-
-	}
-
-	@Test
-	public void validarPlacaConA() {
-
-		respuesta = parqueadero.validarPlacaConA(PLACA_CON_A);
-
-		assertTrue(respuesta);
-
-	}
-
-	@Test
-	public void validarPlacaSinA() {
-
-		respuesta = parqueadero.validarPlacaConA(PLACA_SIN_A);
-
-		assertFalse(respuesta);
+		try {
+			vigilante.validarEstaRegistrado(1);
+			fail();
+		} catch (VehiculoNoAutorizadoException e) {
+			assertEquals("El vehiculo ya se encuentra registrado en el sistema", e.getMessage());
+		}
 
 	}
 
@@ -115,11 +141,11 @@ public class TestParqueadero {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.CARRO))
 				.thenReturn((int) Constantes.NUMERO_CARROS_PERMITIDOS - 1);
 
-		respuesta = parqueadero.validarDisponibilidad(TipoVehiculo.CARRO,
-				(int) Constantes.NUMERO_CARROS_PERMITIDOS - 1);
-
-		assertTrue(respuesta);
-
+		try {
+			vigilante.validarDisponibilidad(TipoVehiculo.CARRO, (int) Constantes.NUMERO_CARROS_PERMITIDOS - 1);
+		} catch (VehiculoNoAutorizadoException e) {
+			assertNotEquals("No hay parqueadero disponible para el vehiculo", e.getMessage());
+		}
 	}
 
 	@Test
@@ -128,8 +154,7 @@ public class TestParqueadero {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.CARRO))
 				.thenReturn((int) Constantes.NUMERO_CARROS_PERMITIDOS);
 		try {
-			respuesta = parqueadero.validarDisponibilidad(TipoVehiculo.CARRO,
-					(int) Constantes.NUMERO_CARROS_PERMITIDOS);
+			vigilante.validarDisponibilidad(TipoVehiculo.CARRO, (int) Constantes.NUMERO_CARROS_PERMITIDOS);
 		} catch (VehiculoNoAutorizadoException e) {
 			assertEquals("No hay parqueadero disponible para el vehiculo", e.getMessage());
 		}
@@ -142,9 +167,11 @@ public class TestParqueadero {
 		Mockito.when(vehiculoDao.vehiculosParqueados(TipoVehiculo.CARRO))
 				.thenReturn((int) Constantes.NUMERO_MOTOS_PERMITIDAS - 1);
 
-		respuesta = parqueadero.validarDisponibilidad(TipoVehiculo.CARRO, (int) Constantes.NUMERO_MOTOS_PERMITIDAS - 1);
-
-		assertTrue(respuesta);
+		try {
+			vigilante.validarDisponibilidad(TipoVehiculo.CARRO, (int) Constantes.NUMERO_MOTOS_PERMITIDAS - 1);
+		} catch (VehiculoNoAutorizadoException e) {
+			assertNotEquals("No hay parqueadero disponible para el vehiculo", e.getMessage());
+		}
 
 	}
 
@@ -155,7 +182,7 @@ public class TestParqueadero {
 				.thenReturn((int) Constantes.NUMERO_MOTOS_PERMITIDAS);
 
 		try {
-			respuesta = parqueadero.validarDisponibilidad(TipoVehiculo.MOTO, (int) Constantes.NUMERO_MOTOS_PERMITIDAS);
+			vigilante.validarDisponibilidad(TipoVehiculo.MOTO, (int) Constantes.NUMERO_MOTOS_PERMITIDAS);
 			fail();
 		} catch (VehiculoNoAutorizadoException e) {
 			assertEquals("No hay parqueadero disponible para el vehiculo", e.getMessage());
@@ -164,40 +191,10 @@ public class TestParqueadero {
 	}
 
 	@Test
-	public void validarHabilitacion() {
-
-		try {
-			GregorianCalendar cal = new GregorianCalendar();
-			cal.setTime(new Date());
-			respuesta = parqueadero.validarHabilitacion(PLACA_CON_A);
-			if ((cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 2)) {
-				assertFalse(respuesta);
-			} else {
-				fail();
-			}
-		} catch (VehiculoNoAutorizadoException e) {
-			assertEquals("El vehiculo no esta autorizado para ingresar", e.getMessage());
-		}
-
-	}
-
-	@Test
-	public void validarEstaRegistrado() {
-
-		try {
-			respuesta = parqueadero.validarEstaRegistrado(1);
-			fail();
-		} catch (VehiculoNoAutorizadoException e) {
-			assertEquals("El vehiculo ya se encuentra registrado en el sistema", e.getMessage());
-		}
-
-	}
-
-	@Test
 	public void ValidarNulos() {
 
 		try {
-			respuesta = parqueadero.validarNulos("");
+			respuesta = vigilante.validarNulos("");
 			fail();
 		} catch (VehiculoNoAutorizadoException e) {
 			assertEquals("Hay datos obligatorios que no han sido ingresados", e.getMessage());
@@ -208,7 +205,7 @@ public class TestParqueadero {
 	@Test
 	public void ValidarNoNulos() {
 
-		respuesta = parqueadero.validarNulos("Test");
+		respuesta = vigilante.validarNulos("Test");
 
 		assertTrue(respuesta);
 

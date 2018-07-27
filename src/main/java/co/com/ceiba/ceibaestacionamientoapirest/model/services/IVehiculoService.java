@@ -9,7 +9,9 @@ public interface IVehiculoService {
 
 	public List<Vehiculo> findAll();
 
-	public Vehiculo save(Vehiculo vehiculo, String accion);
+	public Vehiculo save(Vehiculo vehiculo);
+	
+	public Vehiculo update(Vehiculo vehiculo);
 	
 	public Vehiculo findById(Long id);
 	

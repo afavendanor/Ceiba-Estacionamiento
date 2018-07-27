@@ -1,31 +1,30 @@
 package co.com.ceiba.ceibaestacionamientoapirest.dominio;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public final class Parqueadero {
+public final class DVigilante {
 
+	private static final int VEHICULO_REGISTRADO = 1;
 	private static final int SEGUNDOS_HORA = 3600;
 	private static final int MAXIMO_HORAS_DIA = 9;
 	private static final int HORAS_DIA = 24;
 
-	private static Parqueadero parqueadero;
+	private static DVigilante vigilante;
 
-	private Parqueadero() {
+	private DVigilante() {
 
 	}
 
-	public static Parqueadero getInstance() {
-		if (parqueadero == null) {
-			parqueadero = new Parqueadero();
+	public static DVigilante getInstance() {
+		if (vigilante == null) {
+			vigilante = new DVigilante();
 		}
-		return parqueadero;
+		return vigilante;
 	}
 
 	public double calcularValorAPagar(Vehiculo vehiculo, Date fechaSalida) {
@@ -63,36 +62,21 @@ public final class Parqueadero {
 		return valorAdicional;
 	}
 
-	public boolean validarDisponibilidad(TipoVehiculo tipoVehiculo, int vehiculosParqueados) {
+	public void validarDisponibilidad(TipoVehiculo tipoVehiculo, int vehiculosParqueados) {
 		if (!((TipoVehiculo.CARRO.equals(tipoVehiculo) && vehiculosParqueados < Constantes.NUMERO_CARROS_PERMITIDOS)
 				|| (TipoVehiculo.MOTO.equals(tipoVehiculo)
 						&& vehiculosParqueados < Constantes.NUMERO_MOTOS_PERMITIDAS))) {
 			throw new VehiculoNoAutorizadoException("No hay parqueadero disponible para el vehiculo");
 		}
-		return true;
 	}
 
-	public boolean validarHabilitacion(String placa) {
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(new Date());
-		if (validarPlacaConA(placa)
-				&& (cal.get(Calendar.DAY_OF_WEEK) != 1 || cal.get(Calendar.DAY_OF_WEEK) != 2)) {
-			throw new VehiculoNoAutorizadoException("El vehiculo no esta autorizado para ingresar");
-		}
-		return true;
-	}
-
-	public boolean validarEstaRegistrado(int estaRegistrado) {
-		if (estaRegistrado >= 1) {
+	public void validarEstaRegistrado(int estaRegistrado) {
+		if (estaRegistrado >= VEHICULO_REGISTRADO) {
 			throw new VehiculoNoAutorizadoException("El vehiculo ya se encuentra registrado en el sistema");
 		}
-		return false;
 	}
 
-	public boolean validarPlacaConA(String placa) {
-		return "A".equalsIgnoreCase(placa.substring(0, 1));
-	}
-	
+
 	public boolean validarNulos(String dato) {
 		if ("null".equals(dato) || dato == null || dato.isEmpty()) {
 			throw new VehiculoNoAutorizadoException("Hay datos obligatorios que no han sido ingresados");

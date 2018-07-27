@@ -44,7 +44,7 @@ public class FacturaRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		currentVehiculo.setActivo(false);
-		this.vehiculoService.save(currentVehiculo, "update");
+		this.vehiculoService.save(currentVehiculo);
 		return new ResponseEntity<>(this.facturaService.generarFactura(currentVehiculo), HttpStatus.CREATED);
 	}
 	

@@ -14,7 +14,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.databuilder.VehiculoTestDataBlui
 import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 
-public class TestVehiculo {
+public class TestVehiculoDao {
 
 	@Test
 	public void estaRegistrado() {

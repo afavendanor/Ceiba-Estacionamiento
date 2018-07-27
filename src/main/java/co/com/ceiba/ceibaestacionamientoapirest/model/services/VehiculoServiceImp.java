@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.com.ceiba.ceibaestacionamientoapirest.dominio.Parqueadero;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVigilante;
 import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
@@ -15,8 +16,8 @@ import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 public class VehiculoServiceImp implements IVehiculoService {
 
 	private IVehiculoDao vehiculoDao;
-	Parqueadero parqueadero = Parqueadero.getInstance();
-
+	DVigilante vigilante = DVigilante.getInstance();
+	DVehiculo dvehiculo = DVehiculo.getInstance();
 
 	@Autowired
 	public VehiculoServiceImp(IVehiculoDao vehiculoDao) {
@@ -31,14 +32,20 @@ public class VehiculoServiceImp implements IVehiculoService {
 
 	@Override
 	@Transactional
-	public Vehiculo save(Vehiculo vehiculo, String accion) {
-		parqueadero.validarNulos(vehiculo.getPlaca());
-		parqueadero.validarNulos(String.valueOf(vehiculo.getTipo()));
-		if ("save".equals(accion)) {
-			parqueadero.validarEstaRegistrado(vehiculoDao.estaRegistrado(vehiculo.getPlaca()));
-			parqueadero.validarDisponibilidad(vehiculo.getTipo(), vehiculosRegistrados(vehiculo.getTipo()));
-			parqueadero.validarHabilitacion(vehiculo.getPlaca());
-		}		
+	public Vehiculo save(Vehiculo vehiculo) {
+		vigilante.validarNulos(vehiculo.getPlaca());
+		vigilante.validarNulos(String.valueOf(vehiculo.getTipo()));
+		vigilante.validarEstaRegistrado(vehiculoDao.estaRegistrado(vehiculo.getPlaca()));
+		vigilante.validarDisponibilidad(vehiculo.getTipo(), vehiculosRegistrados(vehiculo.getTipo()));
+		dvehiculo.validarHabilitacion(vehiculo.getPlaca(), vehiculo.getFechaIngreso());	
+		return vehiculoDao.save(vehiculo);
+	}
+	
+	@Override
+	@Transactional
+	public Vehiculo update(Vehiculo vehiculo) {
+		vigilante.validarNulos(vehiculo.getPlaca());
+		vigilante.validarNulos(String.valueOf(vehiculo.getTipo()));		
 		return vehiculoDao.save(vehiculo);
 	}
 
