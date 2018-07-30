@@ -1,4 +1,4 @@
-package co.com.ceiba.ceibaestacionamientoapirest.model.dao;
+package co.com.ceiba.ceibaestacionamientoapirest.model.repository;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public interface IVehiculoDao extends CrudRepository<Vehiculo, Long>{
+public interface IVehiculoRepository extends CrudRepository<Vehiculo, Long>{
 	
 	@Query("select v from Vehiculo v where v.activo = TRUE")
 	public List<Vehiculo> findAll();

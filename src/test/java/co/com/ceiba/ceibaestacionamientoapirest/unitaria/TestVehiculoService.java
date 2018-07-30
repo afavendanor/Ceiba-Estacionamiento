@@ -13,8 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.VehiculoServiceImp;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
@@ -23,11 +23,11 @@ public class TestVehiculoService {
 	private VehiculoServiceImp vehiculoServiceImp;
 
 	@Mock
-	private IVehiculoDao iVehiculoDao;
+	private IVehiculoRepository iVehiculoDao;
 
 	@Before
 	public void setUp() {
-		iVehiculoDao = mock(IVehiculoDao.class);
+		iVehiculoDao = mock(IVehiculoRepository.class);
 		vehiculoServiceImp = new VehiculoServiceImp(iVehiculoDao);
 	}
 

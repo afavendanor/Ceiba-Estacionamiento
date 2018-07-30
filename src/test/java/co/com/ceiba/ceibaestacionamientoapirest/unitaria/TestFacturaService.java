@@ -15,9 +15,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IFacturaDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IFacturaRepository;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.FacturaServiceImp;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
@@ -26,11 +26,11 @@ public class TestFacturaService {
 	private FacturaServiceImp facturaServiceImp;
 
 	@Mock
-	private IFacturaDao iFacturaloDao;
+	private IFacturaRepository iFacturaloDao;
 
 	@Before
 	public void setUp() {
-		iFacturaloDao = mock(IFacturaDao.class);
+		iFacturaloDao = mock(IFacturaRepository.class);
 		facturaServiceImp = new FacturaServiceImp(iFacturaloDao);
 	}
 

@@ -11,10 +11,10 @@ import java.util.List;
 import org.junit.Test;
 
 import co.com.ceiba.ceibaestacionamientoapirest.databuilder.VehiculoTestDataBluilder;
-import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
 import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 
-public class TestVehiculoDao {
+public class TestVehiculoRepository {
 
 	@Test
 	public void estaRegistrado() {
@@ -23,11 +23,11 @@ public class TestVehiculoDao {
 
 		Vehiculo vehiculo = vehiculoTestDataBluilder.build();
 
-		IVehiculoDao vehiculoDao = mock(IVehiculoDao.class);
+		IVehiculoRepository vehiculoRepository = mock(IVehiculoRepository.class);
 		
-		when(vehiculoDao.estaRegistrado(vehiculo.getPlaca())).thenReturn(1);
+		when(vehiculoRepository.estaRegistrado(vehiculo.getPlaca())).thenReturn(1);
 
-		int estaRegistrado = vehiculoDao.estaRegistrado(vehiculo.getPlaca());
+		int estaRegistrado = vehiculoRepository.estaRegistrado(vehiculo.getPlaca());
 
 		assertEquals(1, estaRegistrado);
 	}
@@ -39,11 +39,11 @@ public class TestVehiculoDao {
 
 		Vehiculo vehiculo = vehiculoTestDataBluilder.build();
 
-		IVehiculoDao vehiculoDao = mock(IVehiculoDao.class);
+		IVehiculoRepository vehiculoRepository = mock(IVehiculoRepository.class);
 		
-		when(vehiculoDao.vehiculosParqueados(vehiculo.getTipo())).thenReturn(10);
+		when(vehiculoRepository.vehiculosParqueados(vehiculo.getTipo())).thenReturn(10);
 
-		int vehiculosParqueados = vehiculoDao.vehiculosParqueados(vehiculo.getTipo());
+		int vehiculosParqueados = vehiculoRepository.vehiculosParqueados(vehiculo.getTipo());
 
 		assertEquals(10, vehiculosParqueados);
 
@@ -52,13 +52,13 @@ public class TestVehiculoDao {
 	@Test
 	public void findAll() {
 
-		IVehiculoDao vehiculoDao = mock(IVehiculoDao.class);
+		IVehiculoRepository vehiculoRepository = mock(IVehiculoRepository.class);
 		
 		List<Vehiculo> vehiculos  = new ArrayList<Vehiculo>();
 		
-		when(vehiculoDao.findAll()).thenReturn(vehiculos);
+		when(vehiculoRepository.findAll()).thenReturn(vehiculos);
 
-		List<Vehiculo> v = vehiculoDao.findAll();
+		List<Vehiculo> v = vehiculoRepository.findAll();
 
 		assertNotNull(v);
 

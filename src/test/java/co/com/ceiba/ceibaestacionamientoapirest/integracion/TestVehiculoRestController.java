@@ -79,6 +79,11 @@ public class TestVehiculoRestController {
 
 	@Test
 	public void buscarVehiculoNoExistente() throws Exception {
+		
+		Vehiculo vehiculo = new Vehiculo("FDF254", TipoVehiculo.CARRO, 0, new Date());
+
+		when(vehiculoServiceImp.findById(1L)).thenReturn(vehiculo);
+		
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/{id}", -3L).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isNotFound()).andReturn();
 	}

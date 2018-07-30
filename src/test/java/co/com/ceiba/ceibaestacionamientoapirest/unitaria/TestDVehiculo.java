@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 
 import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
-import co.com.ceiba.ceibaestacionamientoapirest.model.dao.IVehiculoDao;
+import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 
 public class TestDVehiculo {
 
@@ -25,7 +25,7 @@ public class TestDVehiculo {
 	private static final String PLACA_SIN_A = "NWK23D";
 
 	@Mock
-	private IVehiculoDao vehiculoDao;
+	private IVehiculoRepository vehiculoDao;
 
 	@Before
 	public void mocksInitialization() {
