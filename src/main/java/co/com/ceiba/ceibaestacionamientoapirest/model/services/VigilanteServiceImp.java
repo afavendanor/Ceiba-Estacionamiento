@@ -76,4 +76,10 @@ public class VigilanteServiceImp implements IVigilanteService {
 		return vehiculoRepository.save(vehiculo);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<VehiculoEntity> buscarVehiculosPlaca(String placa) {
+		return vehiculoRepository.findByPlaca(placa);
+	}
+
 }

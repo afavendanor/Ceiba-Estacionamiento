@@ -53,7 +53,7 @@ public class TestVehiculoRestController {
 	}
 	
 	@Test
-	public void listarVehiculosNotFound() throws Exception {
+	public void listarVehiculosNoContent() throws Exception {
 		
 		List<VehiculoEntity> vehiculo = new ArrayList<VehiculoEntity>();
 
@@ -86,6 +86,30 @@ public class TestVehiculoRestController {
 		
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/{id}", -3L).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isNotFound()).andReturn();
+	}
+	
+	@Test
+	public void buscarVehiculoPlaca() throws Exception {
+		
+		List<VehiculoEntity> vehiculos = Arrays.asList(new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0, new Date()));
+
+		when(vehiculoServiceImp.buscarVehiculosPlaca("FDF254")).thenReturn(vehiculos);
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculosSearch/{placa}", "FDF254").accept(MediaType.APPLICATION_JSON))
+				.andDo(print()).andExpect(status().isOk()).andReturn();
+
+	}
+
+	@Test
+	public void buscarVehiculoNoExistentePlaca() throws Exception {
+		
+		List<VehiculoEntity> vehiculos = Arrays.asList(new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0, new Date()));
+
+		when(vehiculoServiceImp.buscarVehiculosPlaca("FDF254")).thenReturn(vehiculos);
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculosSearch/{placa}", "AFA490").accept(MediaType.APPLICATION_JSON))
+				.andDo(print()).andExpect(status().isNoContent()).andReturn();
+
 	}
 
 	@Test

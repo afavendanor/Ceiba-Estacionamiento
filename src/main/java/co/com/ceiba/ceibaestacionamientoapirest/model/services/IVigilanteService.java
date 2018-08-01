@@ -15,6 +15,8 @@ public interface IVigilanteService {
 	
 	public VehiculoEntity buscarVehiculo(Long id);
 	
+	public List<VehiculoEntity> buscarVehiculosPlaca(String placa);
+	
 	public int vehiculosRegistrados(TipoVehiculo tipo);
 	
 	public VehiculoEntity cambiarEstadoVehiculo(VehiculoEntity vehiculo);

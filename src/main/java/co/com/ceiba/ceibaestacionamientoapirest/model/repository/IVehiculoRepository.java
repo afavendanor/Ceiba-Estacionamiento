@@ -14,6 +14,9 @@ public interface IVehiculoRepository extends CrudRepository<VehiculoEntity, Long
 	@Query("select v from VehiculoEntity v where v.activo = TRUE")
 	public List<VehiculoEntity> findAll();
 	
+	@Query("select v from VehiculoEntity v where v.activo = TRUE AND v.placa LIKE %:placa%")
+	public List<VehiculoEntity> findByPlaca(@Param("placa") String placa);
+	
 	@Query("SELECT COUNT(*) FROM VehiculoEntity v WHERE v.tipo=:tipo AND v.activo = TRUE")
     public int vehiculosParqueados(@Param("tipo") TipoVehiculo tipo);
 	

@@ -42,6 +42,15 @@ public class VehiculoRestController {
         }
 		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
 	}
+	
+	@GetMapping("/vehiculosSearch/{placa}")
+		public ResponseEntity<List<VehiculoEntity>> buscarVehiculos(@PathVariable String placa) {
+			List<VehiculoEntity> vehiculos  = vehiculoService.buscarVehiculosPlaca(placa);
+			if (vehiculos.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	        }
+			return new ResponseEntity<>(vehiculos, HttpStatus.OK);
+		}
 
 	@PostMapping("/crearVehiculo")
 	public ResponseEntity<VehiculoEntity> crearVehiculo(@RequestBody VehiculoEntity vehiculo) {
