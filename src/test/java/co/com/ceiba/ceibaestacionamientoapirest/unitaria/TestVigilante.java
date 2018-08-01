@@ -2,7 +2,6 @@ package co.com.ceiba.ceibaestacionamientoapirest.unitaria;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -20,7 +19,6 @@ import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 public class TestVigilante {
 
 	Vigilante vigilante;
-	private boolean respuesta;
 	private static final String PLACA_CON_A = "ADN04A";
 
 	@Mock
@@ -106,7 +104,7 @@ public class TestVigilante {
 	public void ValidarNulos() {
 
 		try {
-			respuesta = vigilante.validarNulos("");
+			vigilante.validarNulos("");
 			fail();
 		} catch (VehiculoNoAutorizadoException e) {
 			assertEquals("Hay datos obligatorios que no han sido ingresados", e.getMessage());
@@ -115,11 +113,14 @@ public class TestVigilante {
 	}
 
 	@Test
-	public void ValidarNoNulos() {
+	public void validarNoCilindrajeMoto() {
 
-		respuesta = vigilante.validarNulos("Test");
-
-		assertTrue(respuesta);
+		try {
+			vigilante.validarCilindrajeMoto(TipoVehiculo.MOTO, 0);
+			fail();
+		} catch (VehiculoNoAutorizadoException e) {
+			assertEquals("Para los vehiculos tipo moto el cilindraje es obligatorio", e.getMessage());
+		}
 
 	}
 

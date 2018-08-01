@@ -6,7 +6,7 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public class Calculadora {
+public final class Calculadora {
 	
 	private static Calculadora calculadora;
 

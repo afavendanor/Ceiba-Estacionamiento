@@ -39,6 +39,7 @@ public class VigilanteServiceImp implements IVigilanteService {
 		currentVehiculo.setFechaIngreso(new Date());
 		vigilante.validarNulos(currentVehiculo.getPlaca());
 		vigilante.validarNulos(String.valueOf(currentVehiculo.getTipo()));
+		vigilante.validarCilindrajeMoto(currentVehiculo.getTipo(), currentVehiculo.getCilindraje());
 		vigilante.validarEstaRegistrado(vehiculoRepository.estaRegistrado(currentVehiculo.getPlaca()));
 		vigilante.validarDisponibilidad(currentVehiculo.getTipo(), vehiculosRegistrados(currentVehiculo.getTipo()));
 		Calendar fecha = Calendar.getInstance();
@@ -52,6 +53,7 @@ public class VigilanteServiceImp implements IVigilanteService {
 	public VehiculoEntity actualizarVehiculo(VehiculoEntity vehiculo, VehiculoEntity currentVehiculo) {
 		vigilante.validarNulos(vehiculo.getPlaca());
 		vigilante.validarNulos(String.valueOf(vehiculo.getTipo()));
+		vigilante.validarCilindrajeMoto(vehiculo.getTipo(), vehiculo.getCilindraje());
 		currentVehiculo.setCilindraje(vehiculo.getCilindraje());
 		currentVehiculo.setPlaca(vehiculo.getPlaca());
 		currentVehiculo.setTipo(vehiculo.getTipo());

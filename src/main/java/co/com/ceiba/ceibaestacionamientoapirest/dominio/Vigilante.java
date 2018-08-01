@@ -36,11 +36,16 @@ public final class Vigilante {
 	}
 
 
-	public boolean validarNulos(String dato) {
+	public void validarNulos(String dato) {
 		if ("null".equals(dato) || dato == null || dato.isEmpty()) {
 			throw new VehiculoNoAutorizadoException("Hay datos obligatorios que no han sido ingresados");
 		}
-		return true;
+	}
+	
+	public void validarCilindrajeMoto(TipoVehiculo tipo, double cilindraje) {
+		if (TipoVehiculo.MOTO.equals(tipo) && cilindraje == 0) {
+			throw new VehiculoNoAutorizadoException("Para los vehiculos tipo moto el cilindraje es obligatorio");
+		}
 	}
 
 }

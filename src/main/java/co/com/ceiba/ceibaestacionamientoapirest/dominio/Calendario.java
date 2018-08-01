@@ -2,7 +2,7 @@ package co.com.ceiba.ceibaestacionamientoapirest.dominio;
 
 import java.util.Date;
 
-public class Calendario {
+public final class Calendario {
 
 	private static Calendario gestionFecha;
 	private static final int SEGUNDOS_HORA = 3600;
