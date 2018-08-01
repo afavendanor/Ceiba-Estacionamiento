@@ -13,13 +13,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.Vehiculo;
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 
-public class TestDVehiculo {
+public class TestVehiculo {
 
-	DVehiculo vehiculo;
+	Vehiculo vehiculo;
 	private boolean respuesta;
 	private static final String PLACA_CON_A = "ADN04A";
 	private static final String PLACA_SIN_A = "NWK23D";
@@ -31,7 +31,7 @@ public class TestDVehiculo {
 	public void mocksInitialization() {
 		MockitoAnnotations.initMocks(this);
 
-		vehiculo = DVehiculo.getInstance();
+		vehiculo = Vehiculo.getInstance();
 	}
 
 	@Test

@@ -8,7 +8,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
 
 public class FacturaTest {
 
@@ -38,7 +38,7 @@ public class FacturaTest {
 		/*
 		 * Act
 		 */
-		Factura factura = facturaTestDataBuilder.build();
+		FacturaEntity factura = facturaTestDataBuilder.build();
 
 		/**
 		 * Asserts

@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Test;
 
 import co.com.ceiba.ceibaestacionamientoapirest.databuilder.VehiculoTestDataBluilder;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 
 public class TestVehiculoRepository {
@@ -21,7 +21,7 @@ public class TestVehiculoRepository {
 
 		VehiculoTestDataBluilder vehiculoTestDataBluilder = new VehiculoTestDataBluilder();
 
-		Vehiculo vehiculo = vehiculoTestDataBluilder.build();
+		VehiculoEntity vehiculo = vehiculoTestDataBluilder.build();
 
 		IVehiculoRepository vehiculoRepository = mock(IVehiculoRepository.class);
 		
@@ -37,7 +37,7 @@ public class TestVehiculoRepository {
 
 		VehiculoTestDataBluilder vehiculoTestDataBluilder = new VehiculoTestDataBluilder();
 
-		Vehiculo vehiculo = vehiculoTestDataBluilder.build();
+		VehiculoEntity vehiculo = vehiculoTestDataBluilder.build();
 
 		IVehiculoRepository vehiculoRepository = mock(IVehiculoRepository.class);
 		
@@ -54,11 +54,11 @@ public class TestVehiculoRepository {
 
 		IVehiculoRepository vehiculoRepository = mock(IVehiculoRepository.class);
 		
-		List<Vehiculo> vehiculos  = new ArrayList<Vehiculo>();
+		List<VehiculoEntity> vehiculos  = new ArrayList<VehiculoEntity>();
 		
 		when(vehiculoRepository.findAll()).thenReturn(vehiculos);
 
-		List<Vehiculo> v = vehiculoRepository.findAll();
+		List<VehiculoEntity> v = vehiculoRepository.findAll();
 
 		assertNotNull(v);
 

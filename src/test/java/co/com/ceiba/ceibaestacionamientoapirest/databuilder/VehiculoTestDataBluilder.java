@@ -3,7 +3,7 @@ package co.com.ceiba.ceibaestacionamientoapirest.databuilder;
 import java.util.Calendar;
 import java.util.Date;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 public class VehiculoTestDataBluilder {
@@ -56,8 +56,8 @@ public class VehiculoTestDataBluilder {
 		return this;
 	}
 	
-	public Vehiculo build() {
-		return new Vehiculo(this.placa, this.tipo, this.cilindraje , this.fechaIngreso);
+	public VehiculoEntity build() {
+		return new VehiculoEntity(this.placa, this.tipo, this.cilindraje , this.fechaIngreso);
 	}
 
 }

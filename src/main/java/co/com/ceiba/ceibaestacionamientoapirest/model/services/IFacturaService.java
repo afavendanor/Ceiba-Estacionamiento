@@ -2,15 +2,15 @@ package co.com.ceiba.ceibaestacionamientoapirest.model.services;
 
 import java.util.List;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 
 public interface IFacturaService {
 	
-	public Factura generarFactura(Vehiculo vehiculo);
+	public FacturaEntity generarFactura(VehiculoEntity vehiculo);
 	
-	public List<Factura> findAll();
+	public List<FacturaEntity> findAll();
 	
-	public Factura findById(Long id);
+	public FacturaEntity findById(Long id);
 
 }

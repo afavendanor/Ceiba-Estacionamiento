@@ -11,15 +11,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import co.com.ceiba.ceibaestacionamientoapirest.dominio.DVigilante;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.Vigilante;
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public class TestDVigilante {
+public class TestVigilante {
 
-	DVigilante vigilante;
+	Vigilante vigilante;
 	private boolean respuesta;
 	private static final String PLACA_CON_A = "ADN04A";
 
@@ -30,7 +30,7 @@ public class TestDVigilante {
 	public void mocksInitialization() {
 		MockitoAnnotations.initMocks(this);
 
-		vigilante = DVigilante.getInstance();
+		vigilante = Vigilante.getInstance();
 	}
 
 	@Test

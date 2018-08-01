@@ -2,18 +2,18 @@ package co.com.ceiba.ceibaestacionamientoapirest.dominio;
 
 import java.util.Date;
 
-public class DFecha {
+public class Calendario {
 
-	private static DFecha gestionFecha;
+	private static Calendario gestionFecha;
 	private static final int SEGUNDOS_HORA = 3600;
 
-	private DFecha() {
+	private Calendario() {
 
 	}
 
-	public static DFecha getInstance() {
+	public static Calendario getInstance() {
 		if (gestionFecha == null) {
-			gestionFecha = new DFecha();
+			gestionFecha = new Calendario();
 		}
 		return gestionFecha;
 	}

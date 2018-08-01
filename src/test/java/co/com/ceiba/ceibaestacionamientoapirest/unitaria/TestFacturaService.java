@@ -15,8 +15,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IFacturaRepository;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.FacturaServiceImp;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
@@ -36,7 +36,7 @@ public class TestFacturaService {
 
 	@Test
 	public void findAll() throws Exception {
-		List<Factura> facturas = Arrays.asList(new Factura("FDF254", 1000, new Date(), new Date()));
+		List<FacturaEntity> facturas = Arrays.asList(new FacturaEntity("FDF254", 1000, new Date(), new Date()));
 
 		when(iFacturaloDao.findAll()).thenReturn(facturas);
 
@@ -46,7 +46,7 @@ public class TestFacturaService {
 
 	@Test
 	public void findById() throws Exception {
-		Optional<Factura> factura = Optional.of(new Factura("FDF254", 1000, new Date(), new Date()));
+		Optional<FacturaEntity> factura = Optional.of(new FacturaEntity("FDF254", 1000, new Date(), new Date()));
 
 		when(iFacturaloDao.findById(1L)).thenReturn(factura);
 
@@ -58,13 +58,13 @@ public class TestFacturaService {
 	@Test
 	public void generarFactura() throws Exception {
 			
-		Factura factura = new Factura("FDF254", 1000, new Date(), new Date());
+		FacturaEntity factura = new FacturaEntity("FDF254", 1000, new Date(), new Date());
 		
-		Vehiculo vehiculo = new Vehiculo("FDF254", TipoVehiculo.CARRO, 0,  new Date());
+		VehiculoEntity vehiculo = new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0,  new Date());
 
-		when(iFacturaloDao.save(Mockito.any(Factura.class))).thenReturn(factura);
+		when(iFacturaloDao.save(Mockito.any(FacturaEntity.class))).thenReturn(factura);
 		
-		Factura fact =  facturaServiceImp.generarFactura(vehiculo);
+		FacturaEntity fact =  facturaServiceImp.generarFactura(vehiculo);
 		
 		System.err.println("------->" + facturaServiceImp.generarFactura(vehiculo));
 		

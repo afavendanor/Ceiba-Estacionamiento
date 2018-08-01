@@ -1,6 +1,5 @@
 package co.com.ceiba.ceibaestacionamientoapirest.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
-import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVehiculoService;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
+import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVigilanteService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -24,11 +23,11 @@ import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVehiculoService;
 public class VehiculoRestController {
 
 	@Autowired
-	private IVehiculoService vehiculoService;
+	private IVigilanteService vehiculoService;
 
 	@GetMapping("/vehiculos")
-	public ResponseEntity<List<Vehiculo>> listarVehiculos() {
-		List<Vehiculo> vehiculos  = vehiculoService.findAll();
+	public ResponseEntity<List<VehiculoEntity>> listarVehiculos() {
+		List<VehiculoEntity> vehiculos  = vehiculoService.buscarVehiculos();
 		if (vehiculos.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -36,8 +35,8 @@ public class VehiculoRestController {
 	}
 	
 	@GetMapping("/vehiculos/{id}")
-	public ResponseEntity<Vehiculo> buscarVehiculo( @PathVariable Long id) {
-		Vehiculo vehiculo  = vehiculoService.findById(id);
+	public ResponseEntity<VehiculoEntity> buscarVehiculo( @PathVariable Long id) {
+		VehiculoEntity vehiculo  = vehiculoService.buscarVehiculo(id);
 		if (vehiculo == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -45,24 +44,19 @@ public class VehiculoRestController {
 	}
 
 	@PostMapping("/crearVehiculo")
-	public ResponseEntity<Vehiculo> crearVehiculo(@RequestBody Vehiculo vehiculo) {
-		vehiculo.setActivo(true);
-		vehiculo.setFechaIngreso(new Date());
-		this.vehiculoService.save(vehiculo);
+	public ResponseEntity<VehiculoEntity> crearVehiculo(@RequestBody VehiculoEntity vehiculo) {
+		this.vehiculoService.guardarVehiculo(vehiculo);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 		
 	@PutMapping("/editarVehiculo/{id}")	
-	public ResponseEntity<Vehiculo> actualizarVehiculo(@RequestBody Vehiculo vehiculo, @PathVariable Long id) {
-		Vehiculo currentVehiculo = this.vehiculoService.findById(id);
+	public ResponseEntity<VehiculoEntity> actualizarVehiculo(@RequestBody VehiculoEntity vehiculo, @PathVariable Long id) {
+		VehiculoEntity currentVehiculo = this.vehiculoService.buscarVehiculo(id);
 		if (currentVehiculo == null) {
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }	
-		currentVehiculo.setCilindraje(vehiculo.getCilindraje());
-		currentVehiculo.setPlaca(vehiculo.getPlaca());
-		currentVehiculo.setTipo(vehiculo.getTipo());
-		this.vehiculoService.update(currentVehiculo);
-		return new ResponseEntity<>(currentVehiculo, HttpStatus.OK);
+		this.vehiculoService.actualizarVehiculo(vehiculo, currentVehiculo);
+		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
 	}
 
 }

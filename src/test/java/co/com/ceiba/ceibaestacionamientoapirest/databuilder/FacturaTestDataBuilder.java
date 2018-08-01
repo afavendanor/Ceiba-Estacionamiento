@@ -3,7 +3,7 @@ package co.com.ceiba.ceibaestacionamientoapirest.databuilder;
 import java.util.Calendar;
 import java.util.Date;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
 
 public class FacturaTestDataBuilder {
 	private static final String PLACA = "NWK23D";
@@ -50,8 +50,8 @@ public class FacturaTestDataBuilder {
 		return this;
 	}
 	
-	public Factura build() {
-		return new Factura(this.placa, this.totalAPagar, this.fechaIngreso, this.fechaSalida);
+	public FacturaEntity build() {
+		return new FacturaEntity(this.placa, this.totalAPagar, this.fechaIngreso, this.fechaSalida);
 	}
 
 }

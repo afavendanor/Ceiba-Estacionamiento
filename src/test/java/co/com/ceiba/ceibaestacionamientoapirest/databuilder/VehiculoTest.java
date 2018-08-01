@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 public class VehiculoTest {
@@ -40,7 +40,7 @@ public class VehiculoTest {
 		/*
 		 * Act
 		 */
-		Vehiculo vehiculo = vehiculoTestDataBluilder.build();
+		VehiculoEntity vehiculo = vehiculoTestDataBluilder.build();
 
 		/**
 		 * Asserts

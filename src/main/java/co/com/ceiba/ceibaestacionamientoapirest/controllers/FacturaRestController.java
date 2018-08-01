@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.IFacturaService;
-import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVehiculoService;
+import co.com.ceiba.ceibaestacionamientoapirest.model.services.IVigilanteService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -26,11 +26,11 @@ public class FacturaRestController {
 	private IFacturaService facturaService;
 
 	@Autowired
-	private IVehiculoService vehiculoService;
+	private IVigilanteService vehiculoService;
 
 	@GetMapping("/facturas")
-	public ResponseEntity<List<Factura>> listarFacturas() {
-		List<Factura> facturas = facturaService.findAll();
+	public ResponseEntity<List<FacturaEntity>> listarFacturas() {
+		List<FacturaEntity> facturas = facturaService.findAll();
 		if (facturas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -38,19 +38,18 @@ public class FacturaRestController {
 	}
 
 	@PostMapping("/facturar/{id}")
-	public ResponseEntity<Factura> registrarFactura(@PathVariable Long id) {
-		Vehiculo currentVehiculo = this.vehiculoService.findById(id);
+	public ResponseEntity<FacturaEntity> registrarFactura(@PathVariable Long id) {
+		VehiculoEntity currentVehiculo = this.vehiculoService.buscarVehiculo(id);
 		if (currentVehiculo == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		currentVehiculo.setActivo(false);
-		this.vehiculoService.save(currentVehiculo);
+		this.vehiculoService.cambiarEstadoVehiculo(currentVehiculo);
 		return new ResponseEntity<>(this.facturaService.generarFactura(currentVehiculo), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/facturas/{id}")
-	public ResponseEntity<Factura> buscarFactura( @PathVariable Long id) {
-		Factura factura  = facturaService.findById(id);
+	public ResponseEntity<FacturaEntity> buscarFactura( @PathVariable Long id) {
+		FacturaEntity factura  = facturaService.findById(id);
 		if (factura == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

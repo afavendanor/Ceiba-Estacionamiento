@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
 
-public interface IFacturaRepository extends CrudRepository<Factura, Long> {
+public interface IFacturaRepository extends CrudRepository<FacturaEntity, Long> {
 	
-	public List<Factura> findAll();
+	public List<FacturaEntity> findAll();
 	
 }

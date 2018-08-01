@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import co.com.ceiba.ceibaestacionamientoapirest.CeibaEstacionamientoApiRestApplication;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Factura;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.FacturaEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.model.services.FacturaServiceImp;
 
 @RunWith(SpringRunner.class)
@@ -41,7 +41,7 @@ public class TestFacturaRestController {
 	@Test
 	public void listarFacturas() throws Exception {
 
-		List<Factura> facturas = Arrays.asList(new Factura("LTY123", 1000, new Date(), new Date()));
+		List<FacturaEntity> facturas = Arrays.asList(new FacturaEntity("LTY123", 1000, new Date(), new Date()));
 
 		when(facturaServiceImp.findAll()).thenReturn(facturas);
 
@@ -52,7 +52,7 @@ public class TestFacturaRestController {
 	@Test
 	public void listarFacturasNotFound() throws Exception {
 
-		List<Factura> facturas = new ArrayList<Factura>();
+		List<FacturaEntity> facturas = new ArrayList<FacturaEntity>();
 
 		when(facturaServiceImp.findAll()).thenReturn(facturas);
 
@@ -78,9 +78,9 @@ public class TestFacturaRestController {
 	@Test
 	public void buscarFactura() throws Exception {
 
-		Factura facturas = new Factura("LTY123", 1000, new Date(), new Date());
+		FacturaEntity facturas = new FacturaEntity("LTY123", 1000, new Date(), new Date());
 
-		when(facturaServiceImp.findById(1L)).thenReturn((Factura) facturas);
+		when(facturaServiceImp.findById(1L)).thenReturn((FacturaEntity) facturas);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/facturas/{id}", 1L).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();

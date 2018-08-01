@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import co.com.ceiba.ceibaestacionamientoapirest.CeibaEstacionamientoApiRestApplication;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
-import co.com.ceiba.ceibaestacionamientoapirest.model.services.VehiculoServiceImp;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
+import co.com.ceiba.ceibaestacionamientoapirest.model.services.VigilanteServiceImp;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
 @RunWith(SpringRunner.class)
@@ -38,14 +38,14 @@ public class TestVehiculoRestController {
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private VehiculoServiceImp vehiculoServiceImp;
+	private VigilanteServiceImp vehiculoServiceImp;
 
 	@Test
 	public void listarVehiculos() throws Exception {
 		
-		List<Vehiculo> vehiculos = Arrays.asList(new Vehiculo("FDF254", TipoVehiculo.CARRO, 0, new Date()));
+		List<VehiculoEntity> vehiculos = Arrays.asList(new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0, new Date()));
 
-		when(vehiculoServiceImp.findAll()).thenReturn(vehiculos);
+		when(vehiculoServiceImp.buscarVehiculos()).thenReturn(vehiculos);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos").accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
@@ -55,9 +55,9 @@ public class TestVehiculoRestController {
 	@Test
 	public void listarVehiculosNotFound() throws Exception {
 		
-		List<Vehiculo> vehiculo = new ArrayList<Vehiculo>();
+		List<VehiculoEntity> vehiculo = new ArrayList<VehiculoEntity>();
 
-		when(vehiculoServiceImp.findAll()).thenReturn(vehiculo);
+		when(vehiculoServiceImp.buscarVehiculos()).thenReturn(vehiculo);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos").accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isNoContent()).andReturn();
@@ -68,9 +68,9 @@ public class TestVehiculoRestController {
 	@Test
 	public void buscarVehiculo() throws Exception {
 		
-		Vehiculo vehiculo = new Vehiculo("FDF254", TipoVehiculo.CARRO, 0, new Date());
+		VehiculoEntity vehiculo = new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0, new Date());
 
-		when(vehiculoServiceImp.findById(1L)).thenReturn(vehiculo);
+		when(vehiculoServiceImp.buscarVehiculo(1L)).thenReturn(vehiculo);
 		
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/{id}", 1L).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
@@ -80,9 +80,9 @@ public class TestVehiculoRestController {
 	@Test
 	public void buscarVehiculoNoExistente() throws Exception {
 		
-		Vehiculo vehiculo = new Vehiculo("FDF254", TipoVehiculo.CARRO, 0, new Date());
+		VehiculoEntity vehiculo = new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0, new Date());
 
-		when(vehiculoServiceImp.findById(1L)).thenReturn(vehiculo);
+		when(vehiculoServiceImp.buscarVehiculo(1L)).thenReturn(vehiculo);
 		
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/vehiculos/{id}", -3L).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isNotFound()).andReturn();
@@ -100,9 +100,9 @@ public class TestVehiculoRestController {
 	@Test
 	public void modificarVehiculo() throws Exception {
 		
-		Vehiculo vehiculo = new Vehiculo("FDF254", TipoVehiculo.CARRO, 0, new Date());
+		VehiculoEntity vehiculo = new VehiculoEntity("FDF254", TipoVehiculo.CARRO, 0, new Date());
 
-		when(vehiculoServiceImp.findById(1L)).thenReturn(vehiculo);
+		when(vehiculoServiceImp.buscarVehiculo(1L)).thenReturn(vehiculo);
 
 		String json = "{ \"placa\": \"MNE58A\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";
 
@@ -113,9 +113,9 @@ public class TestVehiculoRestController {
 	@Test
 	public void modificarVehiculoNotFound() throws Exception {
 		
-		Vehiculo vehiculo = new Vehiculo();
+		VehiculoEntity vehiculo = new VehiculoEntity();
 
-		when(vehiculoServiceImp.findById(1L)).thenReturn(vehiculo);
+		when(vehiculoServiceImp.buscarVehiculo(1L)).thenReturn(vehiculo);
 
 		String json = "{ \"placa\": \"MNE58A\" , \"tipo\": \"MOTO\",\"activo\": \"true\", \"cilindraje\": \"1200\" }";
 

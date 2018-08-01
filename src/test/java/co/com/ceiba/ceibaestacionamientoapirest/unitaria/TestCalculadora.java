@@ -10,14 +10,14 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import co.com.ceiba.ceibaestacionamientoapirest.dominio.DCalculadora;
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.dominio.Calculadora;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.model.repository.IVehiculoRepository;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public class TestDCalculadora {
+public class TestCalculadora {
 
-	DCalculadora calculadora;
+	Calculadora calculadora;
 
 	@Mock
 	private IVehiculoRepository vehiculoDao;
@@ -26,7 +26,7 @@ public class TestDCalculadora {
 	public void mocksInitialization() {
 		MockitoAnnotations.initMocks(this);
 
-		calculadora = DCalculadora.getInstance();
+		calculadora = Calculadora.getInstance();
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class TestDCalculadora {
 		Date fechaSalida = calendar.getTime();
 		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 2);
 		Date fechaIngreso = calendar.getTime();
-		Vehiculo vehiculo = new Vehiculo();
+		VehiculoEntity vehiculo = new VehiculoEntity();
 		vehiculo.setTipo(TipoVehiculo.CARRO);
 		vehiculo.setPlaca("ASE456");
 		vehiculo.setFechaIngreso(fechaIngreso);
@@ -62,7 +62,7 @@ public class TestDCalculadora {
 		Date fechaSalida = calendar.getTime();
 		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 27);
 		Date fechaIngreso = calendar.getTime();
-		Vehiculo vehiculo = new Vehiculo();
+		VehiculoEntity vehiculo = new VehiculoEntity();
 		vehiculo.setTipo(TipoVehiculo.CARRO);
 		vehiculo.setPlaca("ASE456");
 		vehiculo.setFechaIngreso(fechaIngreso);
@@ -83,7 +83,7 @@ public class TestDCalculadora {
 		Date fechaSalida = calendar.getTime();
 		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 35);
 		Date fechaIngreso = calendar.getTime();
-		Vehiculo vehiculo = new Vehiculo();
+		VehiculoEntity vehiculo = new VehiculoEntity();
 		vehiculo.setTipo(TipoVehiculo.CARRO);
 		vehiculo.setPlaca("ASE456");
 		vehiculo.setFechaIngreso(fechaIngreso);
@@ -104,7 +104,7 @@ public class TestDCalculadora {
 		Date fechaSalida = calendar.getTime();
 		calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 51);
 		Date fechaIngreso = calendar.getTime();
-		Vehiculo vehiculo = new Vehiculo();
+		VehiculoEntity vehiculo = new VehiculoEntity();
 		vehiculo.setTipo(TipoVehiculo.MOTO);
 		vehiculo.setPlaca("ASE456");
 		vehiculo.setFechaIngreso(fechaIngreso);

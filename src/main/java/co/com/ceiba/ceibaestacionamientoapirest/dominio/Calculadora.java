@@ -2,21 +2,21 @@ package co.com.ceiba.ceibaestacionamientoapirest.dominio;
 
 import java.util.Date;
 
-import co.com.ceiba.ceibaestacionamientoapirest.model.entity.Vehiculo;
+import co.com.ceiba.ceibaestacionamientoapirest.model.entity.VehiculoEntity;
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public class DCalculadora {
+public class Calculadora {
 	
-	private static DCalculadora calculadora;
+	private static Calculadora calculadora;
 
-	private DCalculadora() {
+	private Calculadora() {
 
 	}
 
-	public static DCalculadora getInstance() {
+	public static Calculadora getInstance() {
 		if (calculadora == null) {
-			calculadora = new DCalculadora();
+			calculadora = new Calculadora();
 		}
 		return calculadora;
 	}
@@ -25,11 +25,11 @@ public class DCalculadora {
 	private static final int MAXIMO_HORAS_DIA = 9;
 	private static final int HORAS_DIA = 24;
 	
-	public double calcularValorAPagar(Vehiculo vehiculo, Date fechaSalida) {
+	public double calcularValorAPagar(VehiculoEntity vehiculo, Date fechaSalida) {
 
 		double valorTotal = 0;
 
-		int horas = DFecha.getInstance().retornarHorasParqueo(vehiculo.getFechaIngreso(), fechaSalida);
+		int horas = Calendario.getInstance().retornarHorasParqueo(vehiculo.getFechaIngreso(), fechaSalida);
 		int dias = horas / HORAS_DIA;
 		int horasresiduo = horas % HORAS_DIA;
 		double valorHora = TipoVehiculo.MOTO == vehiculo.getTipo() ? Constantes.VALOR_HORA_MOTO
@@ -51,7 +51,7 @@ public class DCalculadora {
 		return valorTotal + sumarValorAdicionalCilindraje(vehiculo);
 	}
 	
-	public double sumarValorAdicionalCilindraje(Vehiculo vehiculo) {
+	public double sumarValorAdicionalCilindraje(VehiculoEntity vehiculo) {
 		double valorAdicional = 0;
 		if (TipoVehiculo.MOTO == vehiculo.getTipo() && vehiculo.getCilindraje() > Constantes.CILINDRAJE_MOTO_MAXIMO) {
 			valorAdicional += Constantes.VALOR_ADICIONAL_CILINDRAJE_MOTO;

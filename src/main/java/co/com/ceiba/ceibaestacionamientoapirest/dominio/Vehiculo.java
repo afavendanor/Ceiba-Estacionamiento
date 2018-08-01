@@ -4,17 +4,17 @@ import java.util.Calendar;
 
 import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoException;
 
-public final class DVehiculo {
+public final class Vehiculo {
 	
-	private static DVehiculo vehiculo;
+	private static Vehiculo vehiculo;
 
-	private DVehiculo() {
+	private Vehiculo() {
 
 	}
 
-	public static DVehiculo getInstance() {
+	public static Vehiculo getInstance() {
 		if (vehiculo == null) {
-			vehiculo = new DVehiculo();
+			vehiculo = new Vehiculo();
 		}
 		return vehiculo;
 	}

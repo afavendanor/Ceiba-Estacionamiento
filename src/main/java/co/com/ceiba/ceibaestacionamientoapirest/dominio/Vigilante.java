@@ -4,19 +4,19 @@ import co.com.ceiba.ceibaestacionamientoapirest.exception.VehiculoNoAutorizadoEx
 import co.com.ceiba.ceibaestacionamientoapirest.util.Constantes;
 import co.com.ceiba.ceibaestacionamientoapirest.util.TipoVehiculo;
 
-public final class DVigilante {
+public final class Vigilante {
 
 	private static final int VEHICULO_REGISTRADO = 1;
 
-	private static DVigilante vigilante;
+	private static Vigilante vigilante;
 
-	private DVigilante() {
+	private Vigilante() {
 
 	}
 
-	public static DVigilante getInstance() {
+	public static Vigilante getInstance() {
 		if (vigilante == null) {
-			vigilante = new DVigilante();
+			vigilante = new Vigilante();
 		}
 		return vigilante;
 	}
