@@ -1,7 +1,10 @@
 package co.com.ceiba.ceibaestacionamientoapirest.unitaria;
 
+
+import static org.assertj.core.api.Assertions.not;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -54,7 +57,7 @@ public class TestVigilante {
 		try {
 			vigilante.validarDisponibilidad(TipoVehiculo.CARRO, (int) Constantes.NUMERO_CARROS_PERMITIDOS - 1);
 		} catch (VehiculoNoAutorizadoException e) {
-			assertNotEquals("No hay parqueadero disponible para el vehiculo", e.getMessage());
+			assertThat("No hay parqueadero disponible para el vehiculo",is(not( e.getMessage())));
 		}
 	}
 
@@ -80,7 +83,7 @@ public class TestVigilante {
 		try {
 			vigilante.validarDisponibilidad(TipoVehiculo.CARRO, (int) Constantes.NUMERO_MOTOS_PERMITIDAS - 1);
 		} catch (VehiculoNoAutorizadoException e) {
-			assertNotEquals("No hay parqueadero disponible para el vehiculo", e.getMessage());
+			assertThat("No hay parqueadero disponible para el vehiculo",is(not( e.getMessage())));
 		}
 
 	}
